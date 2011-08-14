@@ -39,16 +39,6 @@
 			<td><g:textField name='username' value='${command.username}'/></td>
 		</tr>
 
-		<tr>
-			<td><label for='password'>Password:</label></td>
-			<td><g:passwordField name='password' value='${command.password}'/></td>
-		</tr>
-
-		<tr>
-			<td><label for='password2'>Password (again):</label></td>
-			<td><g:passwordField name='password2' value='${command.password2}'/></td>
-		</tr>
-
 		</table>
 
 		<input type='submit' value='Register'/>

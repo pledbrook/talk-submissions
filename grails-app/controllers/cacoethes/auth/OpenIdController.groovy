@@ -11,6 +11,8 @@ import cacoethes.auth.User
 import cacoethes.auth.Role
 import cacoethes.auth.UserRole
 
+import java.security.SecureRandom
+
 /**
  * Manages associating OpenIDs with application users, both by creating a new local user
  * associated with an OpenID and also by associating a new OpenID to an existing account.
@@ -80,7 +82,7 @@ class OpenIdController {
             return [command: command, openId: openId]
         }
 
-        if (!createNewAccount(command.username, command.password, openId)) {
+        if (!createNewAccount(command.username, generatePassword(), openId)) {
             return [command: command, openId: openId]
         }
 
@@ -206,13 +208,19 @@ class OpenIdController {
             }
         }
     }
+
+    private String generatePassword() {
+        def random = new SecureRandom()
+        def bytes = new byte[32]
+        random.nextBytes(bytes)
+        bytes = bytes.findAll { it >= 33 && it <= 126 }
+        return new String(bytes as byte[], "UTF-8")
+    }
 }
 
 class OpenIdRegisterCommand {
 
     String username = ""
-    String password = ""
-    String password2 = ""
 
     static constraints = {
         username blank: false, validator: { String username, command ->
@@ -220,23 +228,6 @@ class OpenIdRegisterCommand {
                 if (username && User.countByUsername(username)) {
                     return 'openIdRegisterCommand.username.error.unique'
                 }
-            }
-        }
-        password blank: false, minSize: 8, maxSize: 64, validator: { password, command ->
-            if (command.username && command.username.equals(password)) {
-                return 'openIdRegisterCommand.password.error.username'
-            }
-
-            if (password && password.length() >= 8 && password.length() <= 64 &&
-                    (!password.matches('^.*\\p{Alpha}.*$') ||
-                    !password.matches('^.*\\p{Digit}.*$') ||
-                    !password.matches('^.*[!@#$%^&].*$'))) {
-                return 'openIdRegisterCommand.password.error.strength'
-            }
-        }
-        password2 validator: { password2, command ->
-            if (command.password != password2) {
-                return 'openIdRegisterCommand.password2.error.mismatch'
             }
         }
     }
