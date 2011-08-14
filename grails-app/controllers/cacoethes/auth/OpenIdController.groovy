@@ -1,3 +1,5 @@
+package cacoethes.auth
+
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 import org.codehaus.groovy.grails.plugins.springsecurity.openid.OpenIdAuthenticationFailureHandler as OIAFH
 
@@ -33,7 +35,8 @@ class OpenIdController {
      * a new account, or click through to linkAccount to associate the OpenID with an
      * existing local account.
      */
-    def auth = {
+    def auth() {
+        println ">>> Open ID auth"
 
         def config = SpringSecurityUtils.securityConfig
 
@@ -58,7 +61,7 @@ class OpenIdController {
      * in the session rather than passing it between submits so the user has no opportunity
      * to change it.
      */
-    def createAccount = { OpenIdRegisterCommand command ->
+    def createAccount(OpenIdRegisterCommand command) {
 
         String openId = session[OIAFH.LAST_OPENID_USERNAME]
         if (!openId) {
@@ -88,7 +91,7 @@ class OpenIdController {
      * The registration page has a link to this action so an existing user who successfully
      * authenticated with an OpenID can associate it with their account for future logins.
      */
-    def linkAccount = { OpenIdLinkAccountCommand command ->
+    def linkAccount(OpenIdLinkAccountCommand command) {
 
         String openId = session[OIAFH.LAST_OPENID_USERNAME]
         if (!openId) {

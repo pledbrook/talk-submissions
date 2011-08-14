@@ -98,3 +98,4 @@ grails.plugins.springsecurity.authority.className = 'cacoethes.auth.Role'
 grails.plugins.springsecurity.rememberMe.persistent = true
 grails.plugins.springsecurity.rememberMe.persistentToken.domainClassName = 'cacoethes.auth.PersistentLogin'
 grails.plugins.springsecurity.openid.domainClass = 'cacoethes.auth.OpenId'
+grails.plugins.springsecurity.openid.registration.roleNames = ['ROLE_USER']

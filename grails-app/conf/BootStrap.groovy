@@ -1,18 +1,29 @@
 import cacoethes.auth.*
+import grails.util.Environment
 
 class BootStrap {
     def springSecurityService
 
     def init = { servletContext ->
-        def roleAdmin = new Role(authority: 'ROLE_ADMIN').save(failOnError: true)
-        def roleUser = new Role(authority: 'ROLE_USER').save(failOnError: true)
+        def roleAdmin = Role.findOrSaveWhere(authority: "ROLE_ADMIN")
+        def roleUser = Role.findOrSaveWhere(authority: "ROLE_USER")
 
-        def user = new User(username: 'pledbrook', password: "password", enabled: true).save(failOnError: true)
-        def admin = new User(username: 'admin', password: "password", enabled: true).save(failOnError: true)
+        if (Environment.current == Environment.DEVELOPMENT && !User.findByUsername("pledbrook")) {
+            def users = []
+            users << new User(username: "pledbrook", password: "password", enabled: true).save(failOnError: true)
+            users << new User(username: "dilbert", password: "password", enabled: true).save(failOnError: true)
 
-        UserRole.create user, roleUser
-        UserRole.create admin, roleUser
-        UserRole.create admin, roleAdmin, true
+            for (u in users) {
+                UserRole.create u, roleUser
+            }
+        }
+
+        if (!User.findByUsername("admin")) {
+            def admin = new User(username: "admin", password: "password", enabled: true).save(failOnError: true)
+
+            UserRole.create admin, roleUser
+            UserRole.create admin, roleAdmin, true
+        }
     }
 
     def destroy = {

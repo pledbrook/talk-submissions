@@ -26,7 +26,10 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:prodDb"
+            driverClassName = "com.mysql.jdbc.Driver"
+            url = "jdbc:mysql://localhost/ggx_submissions"
+            username = "root"
+            password = ""
         }
     }
 }
