@@ -116,6 +116,10 @@ class ProfileController {
         }
     }
 
+    def loggedIn() {
+        [currentUser: springSecurityService.currentUser]
+    }
+
     /**
      * Checks whether the current user has permission to access the given profile.
      */

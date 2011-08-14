@@ -18,8 +18,7 @@ class SubmissionController {
 
     def list() {
         // Can't view submissions until a profile is created.
-        def user = springSecurityService.currentUser
-        if (!user.profile) {
+        if (SpringSecurityUtils.ifNotGranted("ROLE_ADMIN") && !springSecurityService.currentUser.profile) {
             redirect controller: "profile", action: "create"
             return
         }

@@ -19,7 +19,8 @@ class BootStrap {
         }
 
         if (!User.findByUsername("admin")) {
-            def admin = new User(username: "admin", password: "password", enabled: true).save(failOnError: true)
+            def adminPassword = System.getProperty("admin.password") ?: "changeit"
+            def admin = new User(username: "admin", password: adminPassword, enabled: true).save(failOnError: true)
 
             UserRole.create admin, roleUser
             UserRole.create admin, roleAdmin, true
