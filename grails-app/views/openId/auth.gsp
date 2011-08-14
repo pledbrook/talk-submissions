@@ -1,5 +1,7 @@
 <head>
 <title>Login</title>
+<r:require modules="jquery"/>
+<r:layoutResources/>
 <style type='text/css' media='screen'>
 body {
     background: #202020;
@@ -64,6 +66,33 @@ td.openid-submit {
 }
 
 </style>
+
+<r:script>
+
+(function() { $('#openidLogin input[type=text]').focus(); })();
+
+var openid = true;
+
+function toggleForms() {
+    var openIdLogin = $('#openidLogin');
+    var formLogin = $('#formLogin');
+    if (openid) {
+        openIdLogin.hide();
+        formLogin.show();
+    }
+    else {
+        openIdLogin.show();
+        formLogin.hide();
+    }
+    openid = !openid;
+}
+
+function loginWithGoogle() {
+    $('#openidLogin input[type="text"]').val("https://www.google.com/accounts/o8/id");
+    $('#openidLogin input[type="submit"]').attr('disabled', 'disabled');
+    $('#openidLogin form').submit();
+}
+</r:script>
 </head>
 
 <body>
@@ -92,11 +121,11 @@ td.openid-submit {
             <td>
 
             <div id='openidLogin'>
-                <form id="openIdLoginForm" action='${openIdPostUrl}' method='POST' autocomplete='off' name='openIdLoginForm'>
+                <form action='${openIdPostUrl}' method='POST' autocomplete='off' name='openIdLoginForm'>
                 <table class="openid-loginbox-userpass">
                     <tr>
                         <td>OpenID:</td>
-                        <td><input id="openIdProviderUrl" type="text" name="${openidIdentifier}" class="openid-identifier"/></td>
+                        <td><input type="text" name="${openidIdentifier}" class="openid-identifier"/></td>
                     </tr>
                     <g:if test='${persistentRememberMe}'>
                     <tr>
@@ -148,28 +177,6 @@ td.openid-submit {
         </tr>
     </table>
 </div>
+<r:layoutResources/>
 
-<script>
-
-(function() { document.forms['openIdLoginForm'].elements['openid_identifier'].focus(); })();
-
-var openid = true;
-
-function toggleForms() {
-    if (openid) {
-        document.getElementById('openidLogin').style.display = 'none';
-        document.getElementById('formLogin').style.display = '';
-    }
-    else {
-        document.getElementById('openidLogin').style.display = '';
-        document.getElementById('formLogin').style.display = 'none';
-    }
-    openid = !openid;
-}
-
-function loginWithGoogle() {
-    document.getElementById('openIdProviderUrl').value = "https://www.google.com/accounts/o8/id";
-    document.getElementById('openIdLoginForm').submit();
-}
-</script>
 </body>

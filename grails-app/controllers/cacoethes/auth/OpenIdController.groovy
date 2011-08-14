@@ -38,8 +38,6 @@ class OpenIdController {
      * existing local account.
      */
     def auth() {
-        println ">>> Open ID auth"
-
         def config = SpringSecurityUtils.securityConfig
 
         if (springSecurityService.isLoggedIn()) {
