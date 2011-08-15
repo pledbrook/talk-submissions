@@ -36,7 +36,7 @@
         <li class="fieldcontain">
           <span id="summary-label" class="property-label"><g:message code="submission.summary.label" default="Summary" /></span>
           
-          <span class="property-value" aria-labelledby="summary-label"><g:fieldValue bean="${submissionInstance}" field="summary"/></span>
+          <span class="property-value" aria-labelledby="summary-label"><markdown:renderHtml><g:fieldValue bean="${submissionInstance}" field="summary"/></markdown:renderHtml></span>
           
         </li>
         </g:if>

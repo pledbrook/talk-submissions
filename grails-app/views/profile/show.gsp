@@ -47,7 +47,7 @@
         <li class="fieldcontain">
           <span id="bio-label" class="property-label"><g:message code="profile.bio.label" default="Bio" /></span>
           
-            <span class="property-value" aria-labelledby="bio-label"><g:fieldValue bean="${profileInstance}" field="bio"/></span>
+            <span class="property-value" aria-labelledby="bio-label"><markdown:renderHtml><g:fieldValue bean="${profileInstance}" field="bio"/></markdown:renderHtml></span>
           
         </li>
         </g:if>

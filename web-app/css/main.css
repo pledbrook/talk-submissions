@@ -104,6 +104,15 @@ img {
     padding: 0 0.25em;
 }
 
+.content .property-value * {
+    margin: 0;
+    padding: 0.2em 0;
+}
+
+.content .property-value ul, .content .property-value ol {
+    list-style-position: inside;
+}
+
 .scaffold-list h1 {
     border: none;
 }
