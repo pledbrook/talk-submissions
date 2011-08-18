@@ -16,6 +16,7 @@ grails.project.dependency.resolution = {
         mavenCentral()
     }
     dependencies {
+        runtime "mysql:mysql-connector-java:5.1.17"
     }
 
     plugins {
@@ -23,7 +24,11 @@ grails.project.dependency.resolution = {
                 ":spring-security-core:1.2",
                 ":spring-security-openid:1.0.3"
 
-        runtime ":resources:1.0", ":jquery:1.6.1.1", ":cloud-foundry:1.0.1", ":markdown:0.2.1"
+        runtime ":resources:1.0",
+                ":jquery:1.6.1.1",
+                ":cloud-foundry:1.0.1",
+                ":database-migration:1.0",
+                ":markdown:0.2.1"
 
         build ":tomcat:$grailsVersion"
     }
