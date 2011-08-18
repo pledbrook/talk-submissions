@@ -85,6 +85,10 @@ log4j = {
     warn   'org.mortbay.log'
 }
 
+// Enable dbconsole so we can execute arbitrary SQL against the database.
+grails.dbconsole.enabled = true
+grails.resources.adhoc.patterns = ["/images/*", "/css/*", "*.js"]
+
 // Added by the Spring Security Core plugin:
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'cacoethes.auth.User'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'cacoethes.auth.UserRole'
@@ -98,3 +102,8 @@ grails.plugins.springsecurity.rememberMe.persistent = true
 grails.plugins.springsecurity.rememberMe.persistentToken.domainClassName = 'cacoethes.auth.PersistentLogin'
 grails.plugins.springsecurity.openid.domainClass = 'cacoethes.auth.OpenId'
 grails.plugins.springsecurity.openid.registration.roleNames = ['ROLE_USER']
+
+grails.plugins.springsecurity.controllerAnnotations.staticRules = [
+   '/dbconsole/**': ['ROLE_ADMIN']
+]
+
