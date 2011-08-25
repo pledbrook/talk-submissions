@@ -1,3 +1,5 @@
+import grails.util.Environment
+
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
@@ -83,6 +85,12 @@ log4j = {
            'net.sf.ehcache.hibernate'
 
     warn   'org.mortbay.log'
+}
+
+// Enable database migrations on startup.
+if (Environment.current == Environment.PRODUCTION) {
+//    grails.plugin.databasemigration.updateOnStart = true
+//    grails.plugin.databasemigration.updateOnStartFileNames = ["changelog.groovy"]
 }
 
 // Enable dbconsole so we can execute arbitrary SQL against the database.
