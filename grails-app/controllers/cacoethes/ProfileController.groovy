@@ -21,6 +21,13 @@ class ProfileController {
         [profileInstanceList: Profile.list(params), profileInstanceTotal: Profile.count()]
     }
 
+    @Secured("ROLE_ADMIN")
+    def acceptedEmails() {
+        def acceptedTalks = Submission.findAllByAccepted(true)
+        def profiles = acceptedTalks.collect { it.user.profile }.unique()
+        render profiles*.email.join(", ")
+    }
+
     def create() {
         // If a profile already exists, go to the edit view.
         def user = springSecurityService.currentUser
