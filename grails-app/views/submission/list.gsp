@@ -30,8 +30,6 @@
           
             <g:sortableColumn property="title" title="${message(code: 'submission.title.label', default: 'Title')}" />
           
-            <g:sortableColumn property="summary" title="${message(code: 'submission.summary.label', default: 'Summary')}" />
-          
             <g:sortableColumn property="accepted" title="${message(code: 'submission.accepted.label', default: 'Accepted')}" />
           
             <g:sortableColumn property="schedule" title="${message(code: 'submission.schedule.label', default: 'Schedule')}" />
@@ -47,8 +45,6 @@
           <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
           
             <td><g:link action="show" id="${submissionInstance.id}">${fieldValue(bean: submissionInstance, field: "title")}</g:link></td>
-          
-            <td>${fieldValue(bean: submissionInstance, field: "summary")}</td>
           
             <td>
               <g:if test="${submissionInstance.accepted == null}"><em>Pending</em></g:if>
