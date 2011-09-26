@@ -27,9 +27,11 @@
 <div class="fieldcontain ${hasErrors(bean: submissionInstance, field: 'accepted', 'error')} ">
   <label for="accepted">
     <g:message code="submission.accepted.label" default="Accepted" />
-    
   </label>
-  <g:checkBox name="accepted" value="${submissionInstance?.accepted}" />
+    
+  <g:radioGroup name="accepted" labels="['Undecided', 'Yes', 'No']" values="['undecided', true, false]" value="${submissionInstance.accepted == null ? 'undecided' : submissionInstance.accepted}">
+    <span>${it.label} ${it.radio}</span>
+  </g:radioGroup>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: submissionInstance, field: 'schedule', 'error')} ">

@@ -60,7 +60,7 @@
           
           <span class="property-value" aria-labelledby="accepted-label">
             <g:if test="${submissionInstance.accepted == null}"><em>Pending</em></g:if>
-            <g:else><g:formatBoolean boolean="${submissionInstance.accepted}" /></g:else>
+            <g:else>${submissionInstance.accepted ? 'Yes' : 'No'}</g:else>
           </span>
           
         </li>

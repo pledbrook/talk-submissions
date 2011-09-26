@@ -101,8 +101,14 @@ class SubmissionController {
             }
         }
 
-        bindData submissionInstance, params, ["accepted", "schedule"]
-        submissionInstance.user = springSecurityService.currentUser
+        bindData submissionInstance, params, ["accepted", "schedule", "user"]
+
+        if (params.accepted == "undecided") {
+            submissionInstance.accepted = null
+        }
+        else {
+            submissionInstance.accepted = Boolean.valueOf(params.accepted)
+        }
 
         if (!submissionInstance.save(flush: true)) {
             render(view: "edit", model: [submissionInstance: submissionInstance])

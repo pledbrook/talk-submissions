@@ -52,7 +52,7 @@
           
             <td>
               <g:if test="${submissionInstance.accepted == null}"><em>Pending</em></g:if>
-              <g:else><g:formatBoolean boolean="${submissionInstance.accepted}" /></g:else>
+              <g:else>${submissionInstance.accepted ? 'Yes' : 'No'}</g:else>
             </td>
           
             <td><g:formatDate date="${submissionInstance.schedule}" /></td>
