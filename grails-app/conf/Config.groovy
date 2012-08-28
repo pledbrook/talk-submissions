@@ -145,3 +145,7 @@ grails.plugins.springsecurity.controllerAnnotations.staticRules = [
    '/dbconsole/**': ['ROLE_ADMIN']
 ]
 
+// Load configuration from JSON provided in the optional GRAILS_APP_CONFIG env variable.
+ConfigLoader.addEntries(loadJson(fetchJson()), this)
+def fetchJson() { return System.getenv("GRAILS_APP_CONFIG") }
+def loadJson(content) { return content ? grails.converters.JSON.parse(content) : [:] }
