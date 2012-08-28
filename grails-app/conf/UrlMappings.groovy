@@ -11,6 +11,9 @@ class UrlMappings {
             action = "createAccount"
         }
         
+        "/oauth/success"(controller: "springSecurityOAuth", action: "onSuccess")
+        "/oauth/failure"(controller: "springSecurityOAuth", action: "onFailure")
+
         "/$controller/$action?/$id?"{
             constraints {
                 // apply constraints here

@@ -87,6 +87,36 @@ log4j = {
     warn   'org.mortbay.log'
 }
 
+oauth {
+    providers {
+        twitter {
+            api = org.scribe.builder.api.TwitterApi
+            successUri = '/oauth/success?provider=twitter'
+            failureUri = '/oauth/failure'
+            key = '*******'
+            secret = '*******'
+            callback = "${grails.serverURL}/oauth/twitter/callback"
+        }
+        facebook {
+            api = org.scribe.builder.api.FacebookApi
+            successUri = '/oauth/success?provider=facebook'
+            failureUri = '/oauth/failure'
+            key = '*******'
+            secret = '*******'
+            callback = "${grails.serverURL}/oauth/facebook/callback"
+        }
+        google {
+            api = org.scribe.builder.api.GoogleApi
+            successUri = '/oauth/success?provider=google'
+            failureUri = '/oauth/failure'
+            scope = 'https://www.googleapis.com/auth/userinfo.email'
+            key = '*******'
+            secret = '*******'
+            callback = "${grails.serverURL}/oauth/google/callback"
+        }
+    }
+}
+
 // Enable database migrations on startup.
 if (Environment.current == Environment.PRODUCTION) {
 //    grails.plugin.databasemigration.updateOnStart = true

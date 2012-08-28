@@ -14,7 +14,7 @@ class User {
     boolean passwordExpired
 
     static hasOne = [profile: Profile]
-    static hasMany = [openIds: OpenId]
+    static hasMany = [oauthIds: OauthId, openIds: OpenId]
 
     static constraints = {
         username blank: false, unique: true

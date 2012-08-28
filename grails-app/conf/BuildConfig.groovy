@@ -14,6 +14,8 @@ grails.project.dependency.resolution = {
         grailsHome()
         grailsCentral()
         mavenCentral()
+        mavenRepo "http://maven.springframework.org/milestone/"
+        mavenRepo "http://guice-maven.googlecode.com/svn/trunk/"
     }
     dependencies {
         runtime "mysql:mysql-connector-java:5.1.17"
@@ -21,14 +23,15 @@ grails.project.dependency.resolution = {
 
     plugins {
         compile ":hibernate:$grailsVersion",
-                ":spring-security-core:1.2",
-                ":spring-security-openid:1.0.3"
+                ":spring-security-core:1.2.7.3",
+                ":spring-security-oauth:2.0.1.1",
+                ":spring-security-openid:1.0.4"
 
-        runtime ":resources:1.0",
-                ":jquery:1.6.1.1",
-                ":cloud-foundry:1.0.1",
-                ":database-migration:1.0",
-                ":markdown:0.2.1"
+        runtime ":resources:1.2-RC1",
+                ":jquery:1.8.0",
+                ":cloud-foundry:1.2.3",
+                ":database-migration:1.1",
+                ":markdown:1.0.0.RC1"
 
         build ":tomcat:$grailsVersion"
     }
