@@ -92,9 +92,13 @@ class SpringSecurityOAuthController {
     }
 
     def askToLinkOrCreateAccount() {
+        return createLinkAccountsModel()
+    }
+
+    protected createLinkAccountsModel() {
         def config = SpringSecurityUtils.securityConfig
 
-        [openIdPostUrl: "${request.contextPath}$openIDAuthenticationFilter.filterProcessesUrl",
+        return [openIdPostUrl: "${request.contextPath}$openIDAuthenticationFilter.filterProcessesUrl",
          daoPostUrl:    "${request.contextPath}${config.apf.filterProcessesUrl}",
          openidIdentifier: config.openid.claimedIdentityFieldName]
     }
@@ -112,7 +116,7 @@ class SpringSecurityOAuthController {
                 User user = User.findByUsernameAndPassword(
                         command.username, springSecurityService.encodePassword(command.password))
                 if (user) {
-                    user.addToOAuthIDs(provider: oAuthToken.providerName, accessToken: oAuthToken.socialId, user: user)
+                    user.addToOauthIds(provider: oAuthToken.providerName, accessToken: oAuthToken.socialId, user: user)
                     if (user.validate() && user.save()) {
                         oAuthToken = updateOAuthToken(oAuthToken, user)
                         return true
@@ -131,7 +135,7 @@ class SpringSecurityOAuthController {
             }
         }
 
-        render view: 'askToLinkOrCreateAccount', model: [linkAccountCommand: command]
+        render view: 'askToLinkOrCreateAccount', model: createLinkAccountsModel() + [linkAccountCommand: command]
         return
     }
 
@@ -145,7 +149,7 @@ class SpringSecurityOAuthController {
 
                 boolean created = command.validate() && User.withTransaction { status ->
                     User user = new User(username: command.username, password: command.password1, enabled: true)
-                    user.addToOAuthIDs(provider: oAuthToken.providerName, accessToken: oAuthToken.socialId, user: user)
+                    user.addToOauthIds(provider: oAuthToken.providerName, accessToken: oAuthToken.socialId, user: user)
 
                     // updateUser(user, oAuthToken)
 
@@ -169,7 +173,7 @@ class SpringSecurityOAuthController {
             }
         }
 
-        render view: 'askToLinkOrCreateAccount', model: [createAccountCommand: command]
+        render view: 'askToLinkOrCreateAccount', model: createLinkAccountsModel() + [createAccountCommand: command]
     }
 
     // utils

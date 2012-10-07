@@ -131,11 +131,6 @@ grails.resources.adhoc.patterns = ["/images/*", "/css/*", "*.js"]
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'cacoethes.auth.User'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'cacoethes.auth.UserRole'
 grails.plugins.springsecurity.authority.className = 'cacoethes.auth.Role'
-
-// Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'cacoethes.auth.User'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'cacoethes.auth.UserRole'
-grails.plugins.springsecurity.authority.className = 'cacoethes.auth.Role'
 grails.plugins.springsecurity.rememberMe.persistent = true
 grails.plugins.springsecurity.rememberMe.persistentToken.domainClassName = 'cacoethes.auth.PersistentLogin'
 grails.plugins.springsecurity.openid.domainClass = 'cacoethes.auth.OpenId'

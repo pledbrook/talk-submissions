@@ -2,9 +2,11 @@ package cacoethes.auth
 
 import static cacoethes.auth.SpringSecurityOAuthController.SPRING_SECURITY_OAUTH_TOKEN
 import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
+import org.codehaus.groovy.grails.plugins.springsecurity.openid.OpenIdAuthenticationFailureHandler as OIAFH
 import org.springframework.security.core.context.SecurityContextHolder
 
 class SecurityFilters {
+    def springSecurityService
 
     def filters = {
         all(controller:'*', action:'*') {
@@ -20,12 +22,14 @@ class SecurityFilters {
                             if (!user.save()) {
                                 status.setRollbackOnly()
                             }
+                            else {
+                                authenticateOpenId session
+                            }
                         }
 
                     }
 
                     session.removeAttribute SPRING_SECURITY_OAUTH_TOKEN
-                    SecurityContextHolder.context.authentication = oAuthToken
                 }
             }
             after = { Map model ->
@@ -35,5 +39,12 @@ class SecurityFilters {
 
             }
         }
+    }
+
+    private void authenticateOpenId(session) {
+        def username = session.removeAttribute OIAFH.LAST_OPENID_USERNAME
+        session.removeAttribute OIAFH.LAST_OPENID_ATTRIBUTES
+
+        if (username) springSecurityService.reauthenticate username
     }
 }
