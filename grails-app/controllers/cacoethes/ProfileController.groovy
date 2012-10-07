@@ -22,9 +22,27 @@ class ProfileController {
     }
 
     @Secured("ROLE_ADMIN")
-    def acceptedEmails() {
-        def acceptedTalks = Submission.findAllByAccepted(true)
+    def acceptedEmails(String forYear) {
+        def acceptedTalks = Submission.where {
+            accepted == true
+            if (forYear) {
+                year == forYear
+            }
+        }.list()
+
         def profiles = acceptedTalks.collect { it.user.profile }.unique()
+        render profiles*.email.join(", ")
+    }
+
+    @Secured("ROLE_ADMIN")
+    def submittedEmails(String forYear) {
+        def submittedTalks = Submission.where {
+            if (forYear) {
+                year == forYear
+            }
+        }.property("user").list()
+
+        def profiles = submittedTalks*.profile.unique()
         render profiles*.email.join(", ")
     }
 

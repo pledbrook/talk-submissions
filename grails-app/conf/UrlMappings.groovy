@@ -20,6 +20,9 @@ class UrlMappings {
             }
         }
 
+        "/admin/emails/accepted/$forYear?"(controller: "profile", action: "acceptedEmails")
+        "/admin/emails/submitted/$forYear?"(controller: "profile", action: "submittedEmails")
+
         "/"(controller: "submission", action: "list")
         "500"(view: "/error")
     }
