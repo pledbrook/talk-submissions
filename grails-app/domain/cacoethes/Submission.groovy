@@ -6,6 +6,7 @@ class Submission {
     String title
     String summary
     Boolean accepted
+    Integer year
     Date schedule
 
     static belongsTo = [user: User]

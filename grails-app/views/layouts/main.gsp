@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title><g:layoutTitle default="Grails"/></title>
-    <r:require modules="jquery"/>
+    <r:require modules="modernizr,jquery"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
@@ -19,14 +19,16 @@
     <r:layoutResources/>
   </head>
   <body>
-    <div id="grailsLogo" role="banner"><a href="http://grails.org"><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails"/></a></div>
+    <div id="logo" role="banner">
+        Groovy &amp; Grails Exchange 2012
+    </div>
     <sec:ifLoggedIn>
     <div id="profileBox">
       <g:include controller="profile" action="loggedIn"/>
     </div>
     </sec:ifLoggedIn>
     <g:layoutBody/>
-    <div class="footer" role="contentinfo"></div>
+    <div class="footer" role="contentinfo"><a href="http://skillsmatter.com/event/groovy-grails/groovy-grails-exchange-2012">Event site</a></div>
     <div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
     <r:layoutResources/>
   </body>

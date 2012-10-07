@@ -31,7 +31,9 @@ grails.project.dependency.resolution = {
                 ":jquery:1.8.0",
                 ":cloud-foundry:1.2.3",
                 ":database-migration:1.1",
-                ":markdown:1.0.0.RC1"
+                ":markdown:1.0.0.RC1",
+                ":modernizr:2.6.2",
+                ":webxml:1.4.1"
 
         build ":tomcat:$grailsVersion"
     }

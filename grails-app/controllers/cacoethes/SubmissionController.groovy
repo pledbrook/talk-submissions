@@ -27,13 +27,14 @@ class SubmissionController {
 
         def submissions
         def submissionCount
+        def year = currentYear
         if (SpringSecurityUtils.ifAllGranted("ROLE_ADMIN")) {
-            submissions = Submission.list(params)
-            submissionCount = Submission.count()
+            submissions = Submission.findAllByYear(year, params)
+            submissionCount = Submission.countByYear(year)
         }
         else {
-            submissions = Submission.findAllByUser(springSecurityService.currentUser, params)
-            submissionCount = Submission.countByUser(springSecurityService.currentUser)
+            submissions = Submission.findAllByUserAndYear(springSecurityService.currentUser, year, params)
+            submissionCount = Submission.countByUserAndYear(springSecurityService.currentUser, year)
         }
 
         [submissionInstanceList: submissions, submissionInstanceTotal: submissionCount]
@@ -47,6 +48,7 @@ class SubmissionController {
         def submissionInstance = new Submission()
         bindData submissionInstance, params, ["accepted", "schedule"]
         submissionInstance.user = springSecurityService.currentUser
+        submissionInstance.year = new Date()[Calendar.YEAR]
 
         if (!submissionInstance.save(flush: true)) {
             render view: "create", model: [submissionInstance: submissionInstance]
@@ -145,4 +147,6 @@ class SubmissionController {
         // Check that the user has permission to view this one.
         return SpringSecurityUtils.ifAllGranted("ROLE_ADMIN") || submissionInstance.user == springSecurityService.currentUser
     }
+
+    protected int getCurrentYear() { new Date()[Calendar.YEAR] }
 }
