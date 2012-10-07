@@ -4,11 +4,21 @@ package cacoethes
 
 import org.junit.*
 import grails.test.mixin.*
-import javax.servlet.http.HttpServletResponse
 
+/**
+ * SubmissionControllerTests
+ * A unit test class is used to test individual methods or blocks of code without considering the surrounding infrastructure
+ */
 @TestFor(SubmissionController)
 @Mock(Submission)
 class SubmissionControllerTests {
+
+
+    def populateValidParams(params) {
+      assert params != null
+      // TODO: Populate valid properties like...
+      //params["name"] = 'someValidName'
+    }
 
     void testIndex() {
         controller.index()
@@ -31,19 +41,13 @@ class SubmissionControllerTests {
 
     void testSave() {
         controller.save()
-        assert response.status == HttpServletResponse.SC_METHOD_NOT_ALLOWED
-
-        response.reset()
-        request.method = 'POST'
-        controller.save()
 
         assert model.submissionInstance != null
         assert view == '/submission/create'
 
         response.reset()
 
-        // TODO: Populate valid properties
-
+        populateValidParams(params)
         controller.save()
 
         assert response.redirectedUrl == '/submission/show/1'
@@ -58,9 +62,8 @@ class SubmissionControllerTests {
         assert response.redirectedUrl == '/submission/list'
 
 
-        def submission = new Submission()
-
-        // TODO: populate domain properties
+        populateValidParams(params)
+        def submission = new Submission(params)
 
         assert submission.save() != null
 
@@ -78,9 +81,8 @@ class SubmissionControllerTests {
         assert response.redirectedUrl == '/submission/list'
 
 
-        def submission = new Submission()
-
-        // TODO: populate valid domain properties
+        populateValidParams(params)
+        def submission = new Submission(params)
 
         assert submission.save() != null
 
@@ -92,12 +94,6 @@ class SubmissionControllerTests {
     }
 
     void testUpdate() {
-
-        controller.update()
-        assert response.status == HttpServletResponse.SC_METHOD_NOT_ALLOWED
-
-        response.reset()
-        request.method = 'POST'
         controller.update()
 
         assert flash.message != null
@@ -106,14 +102,14 @@ class SubmissionControllerTests {
         response.reset()
 
 
-        def submission = new Submission()
-
-        // TODO: populate valid domain properties
+        populateValidParams(params)
+        def submission = new Submission(params)
 
         assert submission.save() != null
 
         // test invalid parameters in update
         params.id = submission.id
+        //TODO: add invalid values to params object
 
         controller.update()
 
@@ -122,28 +118,37 @@ class SubmissionControllerTests {
 
         submission.clearErrors()
 
-        // TODO: populate valid domain form parameter
+        populateValidParams(params)
         controller.update()
 
         assert response.redirectedUrl == "/submission/show/$submission.id"
         assert flash.message != null
+
+        //test outdated version number
+        response.reset()
+        submission.clearErrors()
+
+        populateValidParams(params)
+        params.id = submission.id
+        params.version = -1
+        controller.update()
+
+        assert view == "/submission/edit"
+        assert model.submissionInstance != null
+        assert model.submissionInstance.errors.getFieldError('version')
+        assert flash.message != null
     }
 
     void testDelete() {
-        controller.delete()
-        assert response.status == HttpServletResponse.SC_METHOD_NOT_ALLOWED
-
-        response.reset()
-        request.method = 'POST'
         controller.delete()
         assert flash.message != null
         assert response.redirectedUrl == '/submission/list'
 
         response.reset()
 
-        def submission = new Submission()
+        populateValidParams(params)
+        def submission = new Submission(params)
 
-        // TODO: populate valid domain properties
         assert submission.save() != null
         assert Submission.count() == 1
 
