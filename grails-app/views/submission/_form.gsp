@@ -1,3 +1,4 @@
+<div class="fieldinfo">Headline/title of the talk.</div>
 <div class="fieldcontain ${hasErrors(bean: submissionInstance, field: 'title', 'error')} required">
   <label for="title">
     <g:message code="submission.title.label" default="Title" />
@@ -6,6 +7,7 @@
   <g:textField name="title" required="" value="${submissionInstance?.title}"/>
 </div>
 
+<div class="fieldinfo">Talk abstract, up to 1000 characters. Markdown syntax supported.</div>
 <div class="fieldcontain ${hasErrors(bean: submissionInstance, field: 'summary', 'error')} required">
   <label for="summary">
     <g:message code="submission.summary.label" default="Summary" />

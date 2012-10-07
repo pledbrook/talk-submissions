@@ -18,6 +18,7 @@
   <g:textField name="email" required="" value="${profileInstance?.email}"/>
 </div>
 
+<div class="fieldinfo">A short bio of yourself, up to 2000 characters. Markdown syntax supported.</div>
 <div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'bio', 'error')} ">
   <label for="bio">
     <g:message code="profile.bio.label" default="Bio" />

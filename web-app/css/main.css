@@ -235,8 +235,16 @@ fieldset,
     zoom: 1;
 }
 
+.fieldinfo {
+    font-size: 0.8em;
+    font-style: italic;
+    margin-left: 25%;
+    padding-left: 0.5em;
+}
+
 .fieldcontain {
-    margin-top: 1em;
+    margin-top: 0.3em;
+    margin-bottom: 1em;
 }
 
 .fieldcontain label,
