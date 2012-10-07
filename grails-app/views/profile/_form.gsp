@@ -27,6 +27,22 @@
   <g:textArea name="bio" cols="40" rows="5" maxlength="2000" value="${profileInstance?.bio}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'needTravel', 'error')} ">
+  <label for="needTravel">
+    <g:message code="profile.travel.label" default="Need travel expenses" />
+    
+  </label>
+  <g:checkBox name="needTravel" value="${profileInstance?.needTravel}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'needAccommodation', 'error')} ">
+  <label for="needAccommodation">
+    <g:message code="profile.accommodation.label" default="Need accommodation expenses" />
+    
+  </label>
+  <g:checkBox name="needAccommodation" value="${profileInstance?.needAccommodation}"/>
+</div>
+
 <sec:ifAllGranted roles="ROLE_ADMIN">
 <div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'user', 'error')} required">
   <label for="user">

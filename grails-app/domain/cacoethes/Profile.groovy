@@ -6,6 +6,8 @@ class Profile {
     String name
     String email
     String bio
+    Boolean needTravel
+    Boolean needAccommodation
 
     static belongsTo = [user: User]
 
@@ -13,5 +15,7 @@ class Profile {
         name blank: false
         email blank: false
         bio maxSize: 2000
+        needTravel nullable: true
+        needAccommodation nullable: true
     }
 }

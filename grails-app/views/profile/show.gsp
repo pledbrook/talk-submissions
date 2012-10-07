@@ -51,6 +51,20 @@
           
         </li>
         </g:if>
+
+        <li class="fieldcontain">
+          <span id="travel-label" class="property-label"><g:message code="profile.travel.label" default="Need travel expenses" /></span>
+          
+            <span class="property-value" aria-labelledby="bio-label"><g:fieldValue bean="${profileInstance}" field="needTravel"/></span>
+          
+        </li>
+
+        <li class="fieldcontain">
+          <span id="accommodation-label" class="property-label"><g:message code="profile.accommodation.label" default="Need accommodation expenses" /></span>
+          
+            <span class="property-value" aria-labelledby="bio-label"><g:fieldValue bean="${profileInstance}" field="needAccommodation"/></span>
+          
+        </li>
       
         <sec:ifAllGranted roles="ROLE_ADMIN">
         <g:if test="${profileInstance?.user}">

@@ -21,6 +21,10 @@
     </div>
     <div id="list-submission" class="content scaffold-list" role="main">
       <h1>${pageTitle}</h1>
+      <sec:ifLoggedIn>
+      <p>If you need travel and/or accommodation expenses paid, please mark this in
+      </sec:ifLoggedIn>
+      <g:link controller="profile" action="show" id="${currentUser.profile?.id}">your profile</g:link>.</p>
       <g:if test="${flash.message}">
       <div class="message" role="status">${flash.message}</div>
       </g:if>

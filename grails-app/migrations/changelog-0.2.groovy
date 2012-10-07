@@ -64,10 +64,4 @@ databaseChangeLog = {
             column name: "provider"
         }
     }
-
-    changeSet(author: "pledbrook (generated)", id: "1345661813822-2") {
-        addColumn(tableName: "submission") {
-            column(name: "year", type: "integer", valueNumeric: "2011") { constraints nullable: "false" }
-        }
-    }
 }
