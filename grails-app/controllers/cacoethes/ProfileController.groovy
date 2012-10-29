@@ -22,7 +22,7 @@ class ProfileController {
     }
 
     @Secured("ROLE_ADMIN")
-    def acceptedEmails(String forYear) {
+    def acceptedEmails(Integer forYear) {
         def acceptedTalks = Submission.where {
             accepted == true
             if (forYear) {
@@ -35,7 +35,7 @@ class ProfileController {
     }
 
     @Secured("ROLE_ADMIN")
-    def submittedEmails(String forYear) {
+    def submittedEmails(Integer forYear) {
         def submittedTalks = Submission.where {
             if (forYear) {
                 year == forYear
