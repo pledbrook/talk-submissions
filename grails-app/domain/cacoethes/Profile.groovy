@@ -8,6 +8,7 @@ class Profile {
     String bio
     Boolean needTravel
     Boolean needAccommodation
+    String travelFrom
 
     static belongsTo = [user: User]
 
@@ -17,5 +18,6 @@ class Profile {
         bio maxSize: 2000
         needTravel nullable: true
         needAccommodation nullable: true
+        travelFrom nullable: true
     }
 }

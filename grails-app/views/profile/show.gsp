@@ -65,6 +65,13 @@
             <span class="property-value" aria-labelledby="bio-label"><g:fieldValue bean="${profileInstance}" field="needAccommodation"/></span>
           
         </li>
+
+        <li class="fieldcontain">
+          <span id="travelfrom-label" class="property-label"><g:message code="profile.travelfrom.label" default="Travelling from" /></span>
+          
+            <span class="property-value" aria-labelledby="travelfrom-label"><g:fieldValue bean="${profileInstance}" field="travelFrom"/></span>
+          
+        </li>
       
         <sec:ifAllGranted roles="ROLE_ADMIN">
         <g:if test="${profileInstance?.user}">

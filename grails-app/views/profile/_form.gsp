@@ -43,6 +43,15 @@
   <g:checkBox name="needAccommodation" value="${profileInstance?.needAccommodation}"/>
 </div>
 
+<div class="fieldinfo">Where you will be travelling from (city, state and/or country). Only necessary if you need travel expenses covered.</div>
+<div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'travelFrom', 'error')} ">
+  <label for="travelFrom">
+    <g:message code="profile.travelfrom.label" default="Travelling from" />
+    
+  </label>
+  <input type="text" name="travelFrom" value="${profileInstance?.travelFrom?.encodeAsHTML()}"/>
+</div>
+
 <sec:ifAllGranted roles="ROLE_ADMIN">
 <div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'user', 'error')} required">
   <label for="user">

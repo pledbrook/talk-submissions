@@ -13,4 +13,10 @@ databaseChangeLog = {
         }
     }
 
+    changeSet(author: "pledbrook", id: "ProfileTravellingFromAdded") {
+        addColumn(tableName: "profile") {
+            column name: "travel_from", type: "varchar(100)", { constraints nullable: "true" }
+        }
+    }
+
 }
