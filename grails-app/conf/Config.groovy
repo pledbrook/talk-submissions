@@ -117,6 +117,13 @@ oauth {
     }
 }
 
+sendgrid {
+    username = '*******'
+    password = '********'
+}
+
+grails.mail.default.from = "admin@nowhere.net"
+
 // Enable database migrations on startup.
 if (Environment.current == Environment.PRODUCTION) {
 //    grails.plugin.databasemigration.updateOnStart = true

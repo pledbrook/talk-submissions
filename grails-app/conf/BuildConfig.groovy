@@ -33,6 +33,7 @@ grails.project.dependency.resolution = {
                 ":database-migration:1.1",
                 ":markdown:1.0.0.RC1",
                 ":modernizr:2.6.2",
+                ":sendgrid:0.4",
                 ":webxml:1.4.1"
 
         build ":tomcat:$grailsVersion"

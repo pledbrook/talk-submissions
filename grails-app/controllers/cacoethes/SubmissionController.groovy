@@ -8,8 +8,10 @@ import org.springframework.dao.DataIntegrityViolationException
 @Secured("ROLE_USER")
 class SubmissionController {
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST", sendStatusEmail: "POST"]
 
+    def grailsApplication
+    def sendGridService
     def springSecurityService
 
     def index() {
@@ -121,6 +123,7 @@ class SubmissionController {
         redirect(action: "show", id: submissionInstance.id)
     }
 
+    @Secured("ROLE_ADMIN")
     def delete() {
         def submissionInstance = Submission.get(params.id)
         if (!submissionInstance) {
@@ -138,6 +141,54 @@ class SubmissionController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'submission.label', default: 'Submission'), params.id])
             redirect(action: "show", id: params.id)
         }
+    }
+
+    @Secured("ROLE_ADMIN")
+    def sendStatusEmail(Long id) {
+        def submissionInstance = Submission.get(id)
+        if (!submissionInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'submission.label', default: 'Submission'), params.id])
+            redirect action: "show", params: [id: id]
+            return
+        }
+
+        // Can't send an email for a submission that is still pending.
+        if (submissionInstance.accepted == null) {
+            // Status is still pending, so cannot send an email.
+            flash.message = message(code: 'message.submission.pending')
+            redirect action: "show", params: [id: id]
+            return
+        }
+        
+        // Pick the appropriate email template based on the status.
+        def emailTemplate = MailTemplate.where { key == (submissionInstance.accepted ? "accepted" : "rejected") }.get()
+        def binding = createTemplateBinding(submissionInstance)
+        def engine = new groovy.text.SimpleTemplateEngine()
+
+        def config = grailsApplication.config
+        sendGridService.sendMail {
+            from config.grails.mail.default.from
+            to engine.createTemplate(emailTemplate.to).make(binding).toString()
+
+            if (emailTemplate.cc) {
+                cc engine.createTemplate(emailTemplate.cc).make(binding).toString()
+            }
+
+            if (emailTemplate.bcc) {
+                bcc engine.createTemplate(emailTemplate.bcc).make(binding).toString()
+            }
+
+            subject engine.createTemplate(emailTemplate.subject).make(binding).toString()
+            body engine.createTemplate(emailTemplate.body).make(binding).toString()
+        }
+
+        flash.message = message(code: 'message.submission.emailSent')
+        redirect action: "show", params: [id: id]
+    }
+
+    private createTemplateBinding(submission) {
+        def profile = submission.user.profile
+        return [email: profile.email, name: profile.name, title: submission.title]
     }
 
     /**
