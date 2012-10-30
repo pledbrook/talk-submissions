@@ -55,10 +55,6 @@ databaseChangeLog = {
                 initiallyDeferred: "false", referencedColumnNames: "id",
                 referencedTableName: "user", referencesUniqueColumn: "false")
 
-        createIndex(indexName: "FKE41947C3D1F846CF", tableName: "oauth_id") {
-            column(name: "user_id")
-        }
-
         createIndex(indexName: "identity_idx", tableName: "oauth_id") {
             column name: "access_token"
             column name: "provider"
