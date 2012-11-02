@@ -46,6 +46,21 @@ class ProfileController {
         render profiles*.email.join(", ")
     }
 
+    @Secured("ROLE_ADMIN")
+    def acceptedExpenses(Integer forYear) {
+        def acceptedTalks = Submission.where {
+            accepted == true
+            if (forYear) {
+                year == forYear
+            }
+        }.list()
+
+        def profiles = acceptedTalks.collect { it.user.profile }.unique()
+        profiles = profiles.findAll { it.needTravel || it.needAccommodation }
+
+        [profiles: profiles]
+    }
+
     def create() {
         // If a profile already exists, go to the edit view.
         def user = springSecurityService.currentUser
