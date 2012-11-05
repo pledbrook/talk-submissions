@@ -60,7 +60,7 @@
               <g:else>${submissionInstance.accepted ? 'Yes' : 'No'}</g:else>
             </td>
           
-            <td><g:formatDate date="${submissionInstance.schedule}" /></td>
+            <td>${submissionInstance.assignment?.slot} - ${submissionInstance.assignment?.track?.name?.encodeAsHTML()}</td>
           
             <sec:ifAllGranted roles="ROLE_ADMIN">
             <g:set var="currProfile" value="${submissionInstance?.user?.profile}"/>
