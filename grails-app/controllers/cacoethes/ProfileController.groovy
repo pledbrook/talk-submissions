@@ -74,7 +74,7 @@ class ProfileController {
 
     def save() {
         def profileInstance = new Profile(params)
-        profileInstance.user = springSecurityService.currentUser
+        if (springSecurityService.currentUser.username != "admin") profileInstance.user = springSecurityService.currentUser
         if (!profileInstance.save(flush: true)) {
             render(view: "create", model: [profileInstance: profileInstance])
             return
