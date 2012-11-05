@@ -3,6 +3,15 @@
   <head>
     <meta name="layout" content="main">
     <title>GGX ${year} Schedule</title>
+    <style>
+tr td:first-child {
+    width: 10%;
+}
+
+tr td {
+    width: ${Math.floor(90 / trackNames.size())}%;
+}
+    </style>
   </head>
   <body>
     <div class="nav" role="navigation">
@@ -36,9 +45,17 @@
           
             <td>Slot ${slotEntry.key}</td>
           
+            <g:if test="${!slotEntry.value.every { it } }">
+            <td colspan="${trackNames.size()}">
+              <g:set var="currentTalk" value="${slotEntry.value.find { it }.talk }"/>
+              <g:link controller="submission" action="show" id="${currentTalk?.id}">${currentTalk?.title}</g:link>
+            </td>
+            </g:if>
+            <g:else> 
             <g:each in="${slotEntry.value}" var="assignment">
             <td><g:link controller="submission" action="show" id="${assignment?.talk?.id}">${assignment?.talk?.title}</g:link></td>
             </g:each>
+            </g:else>
           </tr>
         </g:each>
         </tbody>
