@@ -17,6 +17,7 @@
       <ul>
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
         <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+        <li><g:link action="schedule">Schedule</g:link></li>
         <sec:ifAllGranted roles="ROLE_ADMIN">
           <li><g:link controller="profile" action="acceptedExpenses" params="[forYear: 2012]">Expenses</g:link></li>
           <li><g:link controller="profile" action="acceptedEmails" params="[forYear: 2012]">Accepted Email Addresses</g:link></li>

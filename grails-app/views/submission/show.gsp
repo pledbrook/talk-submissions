@@ -14,6 +14,7 @@
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
         <li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
         <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+        <li><g:link controller="submission" action="schedule">Schedule</g:link></li>
       </ul>
     </div>
     <div id="show-submission" class="content scaffold-show" role="main">
@@ -66,9 +67,20 @@
         </li>
       
         <li class="fieldcontain">
-          <span id="schedule-label" class="property-label"><g:message code="submission.schedule.label" default="Schedule" /></span>
+          <span id="track-label" class="property-label"><g:message code="submission.track.label" default="Track" /></span>
           
-          <span class="property-value" aria-labelledby="schedule-label"><g:formatDate date="${submissionInstance?.schedule}" /></span>
+          <span class="property-value" aria-labelledby="track-label">
+            ${submissionInstance?.assignment?.track?.name?.encodeAsHTML()}
+          </span>
+          
+        </li>
+      
+        <li class="fieldcontain">
+          <span id="slot-label" class="property-label"><g:message code="submission.slot.label" default="Time Slot" /></span>
+          
+          <span class="property-value" aria-labelledby="slot-label">
+            ${submissionInstance?.assignment?.slot?.order}
+          </span>
           
         </li>
       

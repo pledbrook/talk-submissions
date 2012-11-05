@@ -9,6 +9,8 @@ class Submission {
     Integer year
     Date schedule
 
+    static hasOne = [assignment: TalkAssignment]
+
     static belongsTo = [user: User]
 
     static constraints = {

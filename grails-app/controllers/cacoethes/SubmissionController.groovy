@@ -82,7 +82,10 @@ class SubmissionController {
             return
         }
 
-        [submissionInstance: submissionInstance]
+        [submissionInstance: submissionInstance,
+         assignment: AssignmentCommand.fromSubmission(submissionInstance),
+         allTracks: Track.list(sort: "id"),
+         allSlots: TimeSlot.list(sort: "id")]
     }
 
     def update() {
@@ -107,6 +110,8 @@ class SubmissionController {
 
         bindData submissionInstance, params, ["accepted", "schedule", "user"]
 
+        updateTalkAssignment submissionInstance, params.trackId, params.slotId
+
         if (params.accepted == "undecided") {
             submissionInstance.accepted = null
         }
@@ -115,7 +120,11 @@ class SubmissionController {
         }
 
         if (!submissionInstance.save(flush: true)) {
-            render(view: "edit", model: [submissionInstance: submissionInstance])
+            render view: "edit", model: [
+                    submissionInstance: submissionInstance,
+                    assignment: AssignmentCommand.fromSubmission(submissionInstance),
+                    allTracks: Track.list(sort: "id"),
+                    allSlots: TimeSlot.list(sort: "id")]
             return
         }
 
@@ -141,6 +150,14 @@ class SubmissionController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'submission.label', default: 'Submission'), params.id])
             redirect(action: "show", id: params.id)
         }
+    }
+
+    def schedule(Integer forYear) {
+        if (!forYear) forYear = currentYear
+        def talks = TalkAssignment.where { talk.year == forYear }.list()
+
+        def schedule = createSchedule(talks)
+        [schedule: schedule, year: forYear, trackNames: Track.list(sort: "id")*.name]
     }
 
     @Secured("ROLE_ADMIN")
@@ -199,5 +216,53 @@ class SubmissionController {
         return SpringSecurityUtils.ifAllGranted("ROLE_ADMIN") || submissionInstance.user == springSecurityService.currentUser
     }
 
+    private updateTalkAssignment(submission, trackId, slotId) {
+        def assignment = submission.assignment
+        if (!assignment) {
+            assignment = new TalkAssignment(talk: submission, track: Track.get(trackId), slot: TimeSlot.get(slotId))
+            submission.assignment = assignment
+        }
+        else {
+            if (assignment.track?.id != trackId) assignment.track = Track.get(trackId)
+            if (assignment.slot?.id != slotId) assignment.slot = TimeSlot.get(slotId)
+        }
+
+        return assignment
+    }
+
+    private createSchedule(List talks) {
+        def numTracks = Track.count()
+        def days = talks.groupBy { it.slot.day }.sort()
+        for (day in days) {
+            day.value = day.value.groupBy { it.slot?.order }.sort()
+
+            for (slot in day.value) {
+                def slotTalks = (0..<numTracks).collect { null }
+                for (t in slot.value) {
+                    slotTalks[t.track.order - 1] = t
+                }
+                slot.value = slotTalks
+            }
+        }
+
+        return days
+    }
+
     protected int getCurrentYear() { new Date()[Calendar.YEAR] }
+}
+
+class AssignmentCommand {
+    Long trackId
+    Long slotId
+
+    static constraints = {
+        trackId nullable: true
+        slotId nullable: true
+    }
+
+    static fromSubmission(submission) {
+        return new AssignmentCommand(
+                trackId: submission.assignment?.track?.id,
+                slotId: submission.assignment?.slot?.id)
+    }
 }

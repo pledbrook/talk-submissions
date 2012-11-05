@@ -36,12 +36,20 @@
   </g:radioGroup>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: submissionInstance, field: 'schedule', 'error')} ">
-  <label for="schedule">
-    <g:message code="submission.schedule.label" default="Schedule" />
+<div class="fieldcontain ${hasErrors(bean: assignment, field: 'trackId', 'error')} ">
+  <label for="trackId">
+    <g:message code="submission.track.label" default="Track" />
     
   </label>
-  <g:datePicker name="schedule" precision="day"  value="${submissionInstance?.schedule}" default="none" noSelection="['': '']" />
+  <g:select name="trackId" optionKey="id" optionValue="name" value="${assignment?.trackId}" from="${allTracks}" noSelection="['': '']" />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: assignment, field: 'slotId', 'error')} ">
+  <label for="slotId">
+    <g:message code="submission.slot.label" default="Time Slot" />
+    
+  </label>
+  <g:select name="slotId" optionKey="id" value="${assignment?.slotId}" from="${allSlots}" noSelection="['': '']" />
 </div>
 </sec:ifAllGranted>
       

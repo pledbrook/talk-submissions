@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="layout" content="main">
+    <title>GGX ${year} Schedule</title>
+  </head>
+  <body>
+    <div class="nav" role="navigation">
+      <ul>
+        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+        <sec:ifAllGranted roles="ROLE_ADMIN">
+          <li><g:link controller="profile" action="acceptedExpenses" params="[forYear: 2012]">Expenses</g:link></li>
+          <li><g:link controller="profile" action="acceptedEmails" params="[forYear: 2012]">Accepted Email Addresses</g:link></li>
+        </sec:ifAllGranted>
+      </ul>
+    </div>
+    <div id="schedule" class="content" role="main">
+      <h1>GGX ${year} Schedule</h1>
+      <g:if test="${flash.message}">
+      <div class="message" role="status">${flash.message}</div>
+      </g:if>
+      <g:each in="${schedule}" var="${dayEntry}">
+      <h2>Day ${dayEntry.key}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <g:each in="${trackNames}" var="${track}">
+            <th>${track.encodeAsHTML()}</th>
+            </g:each>
+          </tr>
+        </thead>
+        <tbody>
+        <g:each in="${dayEntry.value}" status="i" var="slotEntry">
+          <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+          
+            <td>Slot ${slotEntry.key}</td>
+          
+            <g:each in="${slotEntry.value}" var="assignment">
+            <td><g:link controller="submission" action="show" id="${assignment?.talk?.id}">${assignment?.talk?.title}</g:link></td>
+            </g:each>
+          </tr>
+        </g:each>
+        </tbody>
+      </table>
+      </g:each>
+    </div>
+  </body>
+</html>
+
