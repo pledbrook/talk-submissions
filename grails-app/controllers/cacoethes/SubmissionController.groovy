@@ -217,6 +217,11 @@ class SubmissionController {
     }
 
     private updateTalkAssignment(submission, trackId, slotId) {
+        if (!trackId || !slotId) {
+            submission.assignment = null
+            return
+        }
+
         def assignment = submission.assignment
         if (!assignment) {
             assignment = new TalkAssignment(talk: submission, track: Track.get(trackId), slot: TimeSlot.get(slotId))

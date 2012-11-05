@@ -18,5 +18,6 @@ class Submission {
         summary blank: false, maxSize: 1000
         accepted nullable: true
         schedule nullable: true
+        assignment nullable: true
     }
 }
