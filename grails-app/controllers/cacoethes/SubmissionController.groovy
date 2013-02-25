@@ -161,6 +161,20 @@ class SubmissionController {
     }
 
     @Secured("ROLE_ADMIN")
+    def conflicts() {
+        def talks = TalkAssignment.where { talk.year == currentYear }.list()
+        def conflicts = talks.groupBy { it.track?.name + "_" + it.slot?.toString() }.findAll { key, value -> value?.size() > 1 }
+
+        render {
+            ul {
+                for (conflict in conflicts) {
+                    li confict.key + ": " + conflict.value*.talk*.title.join(', ')
+                }
+            }
+        }
+    }
+
+    @Secured("ROLE_ADMIN")
     def sendStatusEmail(Long id) {
         def submissionInstance = Submission.get(id)
         if (!submissionInstance) {
