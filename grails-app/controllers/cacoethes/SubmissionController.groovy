@@ -64,7 +64,7 @@ class SubmissionController {
     def show() {
         def submissionInstance = Submission.get(params.id)
 
-        if (!submissionInstance || !checkSubmissionAccess(submissionInstance)) {
+        if (!submissionInstance || (!submissionInstance.assignment && !checkSubmissionAccess(submissionInstance))) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'submission.label', default: 'Submission'), params.id])
             redirect(action: "list")
             return
@@ -213,7 +213,8 @@ class SubmissionController {
      */
     private checkSubmissionAccess(submissionInstance) {
         // Check that the user has permission to view this one.
-        return SpringSecurityUtils.ifAllGranted("ROLE_ADMIN") || submissionInstance.user == springSecurityService.currentUser
+        return SpringSecurityUtils.ifAllGranted("ROLE_ADMIN") ||
+                submissionInstance.user == springSecurityService.currentUser
     }
 
     private updateTalkAssignment(submission, trackId, slotId) {
