@@ -87,9 +87,11 @@
       </ol>
       <g:form>
         <fieldset class="buttons">
+          <app:canEditSubmission id="${submissionInstance?.id}">
           <g:hiddenField name="id" value="${submissionInstance?.id}" />
           <g:link class="edit" action="edit" id="${submissionInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
           <g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+          </app:canEditSubmission>
           <sec:ifAllGranted roles="ROLE_ADMIN">
           <g:actionSubmit action="sendStatusEmail" value="${message(code: 'button.sendStatusEmail.label', default: 'Send Email')}" />
           </sec:ifAllGranted>
