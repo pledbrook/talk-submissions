@@ -1,3 +1,5 @@
+appConfig.groovy
+*.sql
 .settings/
 stacktrace.log
 target/
