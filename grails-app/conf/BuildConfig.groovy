@@ -18,12 +18,11 @@ grails.project.dependency.resolution = {
         mavenLocal()
     }
     dependencies {
-        runtime "mysql:mysql-connector-java:5.1.17", "com.google.inject:guice:3.0"
-
+        runtime "postgresql:postgresql:8.4-702.jdbc3", "com.google.inject:guice:3.0"
     }
 
     plugins {
-        compile ":heroku:1.0.1", ":cloud-support:1.0.8", {
+        compile ":heroku:1.0.1", ":cloud-support:1.0.11", {
             exclude "database-session"
         }
 

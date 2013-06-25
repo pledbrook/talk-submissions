@@ -1,14 +1,4 @@
 databaseChangeLog = {
-    changeSet(author: "pledbrook", id: "ChangeToInnoDB") {
-        sql('ALTER TABLE submission ENGINE=InnoDB')
-        sql('ALTER TABLE user ENGINE=InnoDB')
-        sql('ALTER TABLE role ENGINE=InnoDB')
-        sql('ALTER TABLE user_role ENGINE=InnoDB')
-        sql('ALTER TABLE profile ENGINE=InnoDB')
-        sql('ALTER TABLE open_id ENGINE=InnoDB')
-        sql('ALTER TABLE persistent_logins ENGINE=InnoDB')
-        sql('SET storage_engine=InnoDB')
-    }
 
     changeSet(author: "pledbrook (generated)", id: "1345661813822-1") {
         createTable(tableName: "oauth_id") {

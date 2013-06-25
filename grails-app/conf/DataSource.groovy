@@ -25,9 +25,9 @@ environments {
     }
     production {
         dataSource {
-            driverClassName = "com.mysql.jdbc.Driver"
-            url = "jdbc:mysql://localhost/ggx"
-            username = "root"
+            driverClassName = "org.postgresql.Driver"
+            url = "jdbc:postgresql://localhost:5432/ggx_talks"
+            username = "pledbrook"
             password = ""
         }
     }
