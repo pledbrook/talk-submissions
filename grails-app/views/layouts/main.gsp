@@ -20,7 +20,7 @@
   </head>
   <body>
     <div id="logo" role="banner">
-        Groovy &amp; Grails Exchange 2012
+        Groovy &amp; Grails Exchange 2013
     </div>
     <sec:ifLoggedIn>
     <div id="profileBox">
