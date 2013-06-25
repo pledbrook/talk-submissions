@@ -17,7 +17,6 @@
       </g:if>
       <ul class="socialLogins">
         <li class="twitter"><oauth:connect provider="twitter" id="twitter-connect-link">Twitter</oauth:connect></li>
-        <li class="facebook"><oauth:connect provider="facebook" id="facebook-connect-link">Facebook</oauth:connect></li>
         <li class="google"><oauth:connect provider="google" id="google-connect-link">Google</oauth:connect></li>
       </ul>
       <p class='fheader'>-- or log in as the administrator --</p>
