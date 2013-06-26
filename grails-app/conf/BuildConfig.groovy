@@ -19,7 +19,9 @@ grails.project.dependency.resolution = {
         mavenLocal()
     }
     dependencies {
-        runtime "org.postgresql:postgresql:9.2-1003-jdbc4", "com.google.inject:guice:3.0"
+        runtime "org.postgresql:postgresql:9.2-1003-jdbc4",
+                "com.google.inject:guice:3.0",
+                "com.github.groovy-wslite:groovy-wslite:0.8.0"
     }
 
     plugins {
@@ -40,8 +42,11 @@ grails.project.dependency.resolution = {
                 ":database-migration:1.1",
                 ":markdown:1.0.0.RC1",
                 ":modernizr:2.6.2",
-                ":sendgrid:1.1",
                 ":webxml:1.4.1"
+
+        runtime ":sendgrid:1.1", {
+            excludes "groovy-wslite"
+        }
 
         build ":tomcat:$grailsVersion"
     }
