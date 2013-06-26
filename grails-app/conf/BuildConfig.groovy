@@ -19,7 +19,7 @@ grails.project.dependency.resolution = {
         mavenLocal()
     }
     dependencies {
-        runtime "postgresql:postgresql:8.4-702.jdbc3", "com.google.inject:guice:3.0"
+        runtime "org.postgresql:postgresql:9.2-1003-jdbc4", "com.google.inject:guice:3.0"
     }
 
     plugins {
@@ -34,13 +34,13 @@ grails.project.dependency.resolution = {
             excludes "guice", "spock", "spock-grails-support"
         }
 
-        runtime ":resources:1.2-RC1",
+        runtime ":resources:1.2",
                 ":jquery:1.8.0",
 //                ":cloud-foundry:1.2.3",
                 ":database-migration:1.1",
                 ":markdown:1.0.0.RC1",
                 ":modernizr:2.6.2",
-                ":sendgrid:0.4",
+                ":sendgrid:1.1",
                 ":webxml:1.4.1"
 
         build ":tomcat:$grailsVersion"
