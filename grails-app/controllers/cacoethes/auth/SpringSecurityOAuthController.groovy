@@ -99,8 +99,8 @@ class SpringSecurityOAuthController {
         def config = SpringSecurityUtils.securityConfig
 
         return [openIdPostUrl: "${request.contextPath}$openIDAuthenticationFilter.filterProcessesUrl",
-         daoPostUrl:    "${request.contextPath}${config.apf.filterProcessesUrl}",
-         openidIdentifier: config.openid.claimedIdentityFieldName]
+                daoPostUrl:    "${request.contextPath}${config.apf.filterProcessesUrl}",
+                openidIdentifier: config.openid.claimedIdentityFieldName]
     }
 
     /**
@@ -388,6 +388,7 @@ class OAuthLinkAccountCommand {
 
     String username
     String password
+    String openid_identifier
 
     static constraints = {
         username blank: false
