@@ -28,7 +28,7 @@
     </div>
     </sec:ifLoggedIn>
     <g:layoutBody/>
-    <div class="footer" role="contentinfo"><a href="http://skillsmatter.com/event/groovy-grails/groovy-grails-exchange-2012">Event site</a></div>
+    <div class="footer" role="contentinfo"><a href="http://skillsmatter.com/event/groovy-grails/groovy-grails-exchange-2013">Event site</a></div>
     <div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
     <r:layoutResources/>
   </body>
