@@ -26,6 +26,7 @@
     </div>
     <div id="list-submission" class="content scaffold-list" role="main">
       <h1>${pageTitle}</h1>
+      <p><em>Submission deadline:&nbsp;&nbsp; <strong><g:formatDate date="${deadline}" format="dd MMM yyyy"/></strong>&nbsp; 00:00 UTC&nbsp;&nbsp;&nbsp; (<g:countdown id="conf-countdown" date="${deadline}"/>)</em></p>
       <sec:ifLoggedIn>
       <p>If you need travel and/or accommodation expenses paid, please mark this in
       </sec:ifLoggedIn>
