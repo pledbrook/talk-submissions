@@ -37,12 +37,12 @@
         <li class="fieldcontain">
           <span id="summary-label" class="property-label"><g:message code="submission.summary.label" default="Summary" /></span>
           
-          <span class="property-value" aria-labelledby="summary-label"><markdown:renderHtml><g:fieldValue bean="${submissionInstance}" field="summary"/></markdown:renderHtml></span>
+          <span class="property-value" aria-labelledby="summary-label"><app:mdToHtml><g:fieldValue bean="${submissionInstance}" field="summary"/></app:mdToHtml></span>
           
         </li>
         </g:if>
       
-        <sec:ifAllGranted roles="ROLE_ADMIN">
+        <app:hasRole name="ROLE_ADMIN">
         <g:if test="${submissionInstance?.user}">
         <li class="fieldcontain">
           <span id="user-label" class="property-label"><g:message code="submission.user.label" default="User" /></span>
@@ -54,7 +54,7 @@
           
         </li>
         </g:if>
-        </sec:ifAllGranted>
+        </app:hasRole>
       
         <li class="fieldcontain">
           <span id="accepted-label" class="property-label"><g:message code="submission.accepted.label" default="Accepted" /></span>
@@ -92,9 +92,9 @@
           <g:link class="edit" action="edit" id="${submissionInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
           <g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
           </app:canEditSubmission>
-          <sec:ifAllGranted roles="ROLE_ADMIN">
+          <app:hasRole name="ROLE_ADMIN">
           <g:actionSubmit action="sendStatusEmail" value="${message(code: 'button.sendStatusEmail.label', default: 'Send Email')}" />
-          </sec:ifAllGranted>
+          </app:hasRole>
         </fieldset>
       </g:form>
     </div>

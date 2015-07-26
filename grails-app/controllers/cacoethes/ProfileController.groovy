@@ -1,27 +1,24 @@
 package cacoethes
 
-import grails.plugins.springsecurity.Secured
-import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
+import cacoethes.auth.User
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.security.core.context.SecurityContextHolder as SCH
 
-@Secured("ROLE_USER")
 class ProfileController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def springSecurityService
+    def userService
 
     def index() {
         redirect(action: "list", params: params)
     }
 
-    @Secured("ROLE_ADMIN")
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [profileInstanceList: Profile.list(params), profileInstanceTotal: Profile.count()]
     }
 
-    @Secured("ROLE_ADMIN")
     def acceptedEmails(Integer forYear) {
         def acceptedTalks = Submission.where {
             accepted == true
@@ -34,7 +31,6 @@ class ProfileController {
         render profiles*.email.join(", ")
     }
 
-    @Secured("ROLE_ADMIN")
     def submittedEmails(Integer forYear) {
         def submittedTalks = Submission.where {
             if (forYear) {
@@ -46,7 +42,6 @@ class ProfileController {
         render profiles*.email.join(", ")
     }
 
-    @Secured("ROLE_ADMIN")
     def acceptedExpenses(Integer forYear) {
         def acceptedTalks = Submission.where {
             accepted == true
@@ -63,8 +58,8 @@ class ProfileController {
 
     def create() {
         // If a profile already exists, go to the edit view.
-        def user = springSecurityService.currentUser
-        if (SpringSecurityUtils.ifNotGranted("ROLE_ADMIN") && user.profile) {
+        def user = userService.currentUser()
+        if (!hasRole("ROLE_ADMIN") && user.profile) {
             redirect action: "edit", id: user.profile.id
             return
         }
@@ -73,8 +68,9 @@ class ProfileController {
     }
 
     def save() {
-        def profileInstance = new Profile(params)
-        if (springSecurityService.currentUser.username != "admin") profileInstance.user = springSecurityService.currentUser
+        final profileInstance = new Profile(params)
+        final currentUser = userService.currentUser()
+        if (currentUser.username != "admin") profileInstance.user = currentUser
         if (!profileInstance.save(flush: true)) {
             render(view: "create", model: [profileInstance: profileInstance])
             return
@@ -136,7 +132,6 @@ class ProfileController {
         redirect(action: "show", id: profileInstance.id)
     }
 
-    @Secured("ROLE_ADMIN")
     def delete() {
         def profileInstance = Profile.get(params.id)
         if (!profileInstance) {
@@ -157,7 +152,7 @@ class ProfileController {
     }
 
     def loggedIn() {
-        [currentUser: springSecurityService.currentUser]
+        [currentUser: userService.currentUser()]
     }
 
     /**
@@ -165,6 +160,14 @@ class ProfileController {
      */
     private checkProfileAccess(profile) {
         // Check that the user has permission to view this one.
-        return SpringSecurityUtils.ifAllGranted("ROLE_ADMIN") || profile.user == springSecurityService.currentUser
+        return hasRole("ROLE_ADMIN") || profile.user == userService.currentUser()
+    }
+
+    private boolean hasRole(String role) {
+        return SCH.context?.authentication?.authorities*.authority.contains(role)
+    }
+
+    private User getCurrentUser() {
+        return User.get(SCH.context?.authentication?.principal?.id)
     }
 }

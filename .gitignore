@@ -1,5 +1,9 @@
 appConfig.groovy
 *.sql
+.gradle/
+.idea/
 .settings/
+build/
+prod-config.json
 stacktrace.log
 target/

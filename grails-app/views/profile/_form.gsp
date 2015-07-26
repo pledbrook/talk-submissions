@@ -52,7 +52,7 @@
   <input type="text" name="travelFrom" value="${profileInstance?.travelFrom?.encodeAsHTML()}"/>
 </div>
 
-<sec:ifAllGranted roles="ROLE_ADMIN">
+<app:hasRole name="ROLE_ADMIN">
 <div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'user', 'error')} required">
   <label for="user">
     <g:message code="profile.user.label" default="User" />
@@ -60,4 +60,4 @@
   </label>
   <g:select id="user" name="user.id" from="${cacoethes.auth.User.list()}" optionKey="id" required="" value="${profileInstance?.user?.id}" class="many-to-one"/>
 </div>
-</sec:ifAllGranted>
+</app:hasRole>

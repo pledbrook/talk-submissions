@@ -1,18 +1,14 @@
 package cacoethes
 
-import cacoethes.auth.User
-import grails.plugins.springsecurity.Secured
-import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.security.core.context.SecurityContextHolder as SCH
 
-@Secured("ROLE_USER")
 class SubmissionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", sendStatusEmail: "POST"]
 
-    def grailsApplication
     def sendGridService
-    def springSecurityService
+    def userService
 
     def index() {
         redirect(action: "list", params: params)
@@ -20,7 +16,8 @@ class SubmissionController {
 
     def list() {
         // Can't view submissions until a profile is created.
-        if (SpringSecurityUtils.ifNotGranted("ROLE_ADMIN") && !springSecurityService.currentUser.profile) {
+        final currentUser = userService.currentUser()
+        if (!hasRole("ROLE_ADMIN") && !currentUser.profile) {
             redirect controller: "profile", action: "create"
             return
         }
@@ -30,13 +27,13 @@ class SubmissionController {
         def submissions
         def submissionCount
         def year = currentYear
-        if (SpringSecurityUtils.ifAllGranted("ROLE_ADMIN")) {
+        if (hasRole("ROLE_ADMIN")) {
             submissions = Submission.findAllByYear(year, params)
             submissionCount = Submission.countByYear(year)
         }
         else {
-            submissions = Submission.findAllByUserAndYear(springSecurityService.currentUser, year, params)
-            submissionCount = Submission.countByUserAndYear(springSecurityService.currentUser, year)
+            submissions = Submission.findAllByUserAndYear(currentUser, year, params)
+            submissionCount = Submission.countByUserAndYear(currentUser, year)
         }
 
         def deadline = new GregorianCalendar(2013, 8, 7)
@@ -44,7 +41,8 @@ class SubmissionController {
 
         [submissionInstanceList: submissions,
          submissionInstanceTotal: submissionCount,
-         deadline: deadline.time]
+         deadline: deadline.time,
+         currentUser: currentUser]
     }
 
     def create() {
@@ -54,7 +52,7 @@ class SubmissionController {
     def save() {
         def submissionInstance = new Submission()
         bindData submissionInstance, params, ["accepted", "schedule"]
-        submissionInstance.user = springSecurityService.currentUser
+        submissionInstance.user = userService.currentUser()
         submissionInstance.year = new Date()[Calendar.YEAR]
 
         if (!submissionInstance.save(flush: true)) {
@@ -137,7 +135,6 @@ class SubmissionController {
         redirect(action: "show", id: submissionInstance.id)
     }
 
-    @Secured("ROLE_ADMIN")
     def delete() {
         def submissionInstance = Submission.get(params.id)
         if (!submissionInstance) {
@@ -165,7 +162,6 @@ class SubmissionController {
         [schedule: schedule, year: forYear, trackNames: Track.list(sort: "id")*.name]
     }
 
-    @Secured("ROLE_ADMIN")
     def conflicts() {
         def talks = TalkAssignment.where { talk.year == currentYear }.list()
         def conflicts = talks.groupBy { it.track?.name + "_" + it.slot?.toString() }.findAll { key, value -> value?.size() > 1 }
@@ -179,7 +175,6 @@ class SubmissionController {
         }
     }
 
-    @Secured("ROLE_ADMIN")
     def sendStatusEmail(Long id) {
         def submissionInstance = Submission.get(id)
         if (!submissionInstance) {
@@ -232,8 +227,8 @@ class SubmissionController {
      */
     private checkSubmissionAccess(submissionInstance) {
         // Check that the user has permission to view this one.
-        return SpringSecurityUtils.ifAllGranted("ROLE_ADMIN") ||
-                submissionInstance.user == springSecurityService.currentUser
+        return hasRole("ROLE_ADMIN") ||
+                submissionInstance.user == userService.currentUser()
     }
 
     private updateTalkAssignment(submission, trackId, slotId) {
@@ -274,6 +269,10 @@ class SubmissionController {
     }
 
     protected int getCurrentYear() { new Date()[Calendar.YEAR] }
+
+    private boolean hasRole(String role) {
+        return SCH.context?.authentication?.authorities*.authority.contains(role)
+    }
 }
 
 class AssignmentCommand {

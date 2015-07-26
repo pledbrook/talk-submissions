@@ -4,8 +4,6 @@ import cacoethes.Profile
 
 class User {
 
-    transient springSecurityService
-
     String username
     String password
     boolean enabled = true
@@ -29,19 +27,5 @@ class User {
 
     Set<Role> getAuthorities() {
         UserRole.findAllByUser(this).collect { it.role } as Set
-    }
-
-    def beforeInsert() {
-        encodePassword()
-    }
-
-    def beforeUpdate() {
-        if (isDirty('password')) {
-            encodePassword()
-        }
-    } 
-
-    protected void encodePassword() {
-        password = springSecurityService.encodePassword(password)
     }
 }

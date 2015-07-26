@@ -16,7 +16,7 @@
   <g:textArea name="summary" cols="40" rows="5" maxlength="1000" required="" value="${submissionInstance?.summary}"/>
 </div>
 
-<sec:ifAllGranted roles="ROLE_ADMIN">
+<app:hasRole name="ROLE_ADMIN">
 <div class="fieldcontain ${hasErrors(bean: submissionInstance, field: 'user', 'error')} ">
   <label for="user">
     <g:message code="submission.user.label" default="User" />
@@ -51,5 +51,5 @@
   </label>
   <g:select name="slotId" optionKey="id" value="${assignment?.slotId}" from="${allSlots}" noSelection="['': '']" />
 </div>
-</sec:ifAllGranted>
+</app:hasRole>
       

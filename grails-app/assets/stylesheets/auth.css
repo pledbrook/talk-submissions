@@ -1,0 +1,55 @@
+#login {
+	margin: auto;
+	width: 510px;
+}
+
+#login p {
+	margin: 2em;
+	text-align: center;
+}
+
+#login > ul {
+	list-style-type: none;
+	margin: 1em;
+}
+
+#login > ul li {
+	margin: 0.5em 0;
+}
+
+ul.socialLogins {
+	list-style-type: none;
+	height: 3em;
+	margin: 2em auto 0 auto;
+	width: 100%;
+}
+
+ul.socialLogins li {
+	float: left;
+	padding: 2px;
+	margin: 0.5em;
+	width: 150px;
+}
+
+ul.socialLogins li a {
+	display: inline-block;
+	color: transparent;
+	width: 100%;
+}
+
+li.twitter {
+	background: url(../images/sign-in-sprite.jpg) no-repeat 0 0;
+}
+
+li.facebook {
+	background: url(../images/sign-in-sprite.jpg) no-repeat 0 -44px;
+}
+
+li.google {
+	background: url(../images/sign-in-sprite.jpg) no-repeat 0 -22px;
+}
+
+#loginForm > div {
+	margin: 0 auto;
+	width: 21em;
+}

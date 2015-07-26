@@ -12,10 +12,10 @@
     <div class="nav" role="navigation">
       <ul>
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <sec:ifAllGranted roles="ROLE_ADMIN">
+        <app:hasRole name="ROLE_ADMIN">
         <li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
         <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-        </sec:ifAllGranted>
+        </app:hasRole>
       </ul>
     </div>
     <div id="show-profile" class="content scaffold-show" role="main">
@@ -47,7 +47,7 @@
         <li class="fieldcontain">
           <span id="bio-label" class="property-label"><g:message code="profile.bio.label" default="Bio" /></span>
           
-            <span class="property-value" aria-labelledby="bio-label"><markdown:renderHtml><g:fieldValue bean="${profileInstance}" field="bio"/></markdown:renderHtml></span>
+            <span class="property-value" aria-labelledby="bio-label"><app:mdToHtml><g:fieldValue bean="${profileInstance}" field="bio"/></app:mdToHtml></span>
           
         </li>
         </g:if>
@@ -73,7 +73,7 @@
           
         </li>
       
-        <sec:ifAllGranted roles="ROLE_ADMIN">
+        <app:hasRole name="ROLE_ADMIN">
         <g:if test="${profileInstance?.user}">
         <li class="fieldcontain">
           <span id="user-label" class="property-label"><g:message code="profile.user.label" default="User" /></span>
@@ -82,7 +82,7 @@
           
         </li>
         </g:if>
-        </sec:ifAllGranted>
+        </app:hasRole>
       
       </ol>
       <g:form>
