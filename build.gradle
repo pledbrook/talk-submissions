@@ -82,7 +82,7 @@ dependencies {
     runtime "org.postgresql:postgresql:9.2-1003-jdbc4"
 }
 
-task stage(dependsOn: "assemble") << {
+task stage(dependsOn: "war") << {
     delete fileTree(dir: "build/distributions")
     delete fileTree(dir: "build/assetCompile")
     delete fileTree(dir: "build/distributions")
