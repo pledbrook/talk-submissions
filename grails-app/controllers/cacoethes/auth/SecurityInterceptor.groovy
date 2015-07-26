@@ -1,8 +1,5 @@
 package cacoethes.auth
 
-//import org.pac4j.springframework.security.authentication.ClientAuthenticationToken
-//import org.springframework.security.core.context.SecurityContextHolder
-
 class SecurityInterceptor {
     def userService
 
@@ -19,10 +16,5 @@ class SecurityInterceptor {
         return true
     }
 
-    void afterView() { }
-
-//    private getAuthentication() {
-//        return SecurityContextHolder.context.authentication
-//    }
-
+//    void afterView() { }
 }
