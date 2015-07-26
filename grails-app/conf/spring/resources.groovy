@@ -17,13 +17,13 @@ beans = {
 
     // PAC4j configuration
     twitterClient(TwitterClient) {
-        key = application.config.app.twitterClient.key
-        secret = application.config.app.twitterClient.secret
+        key = application.config.app.twitterclient.key
+        secret = application.config.app.twitterclient.secret
     }
 
     googleClient(Google2Client) {
-        key = application.config.app.googleClient.key
-        secret = application.config.app.googleClient.secret
+        key = application.config.app.googleclient.key
+        secret = application.config.app.googleclient.secret
     }
 
     formClient(FormClient) {
