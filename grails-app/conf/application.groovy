@@ -33,3 +33,6 @@ environments {
 ConfigLoader.addEntries(loadJson(fetchJson()), this)
 def fetchJson() { return System.getenv("GRAILS_APP_CONFIG") }
 def loadJson(content) { return content ? grails.converters.JSON.parse(content) : [:] }
+
+println ">>> GRAILS_APP_CONFIG: " + fetchJson()
+println ">>> App config: " + app
