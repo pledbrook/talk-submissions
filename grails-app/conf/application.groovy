@@ -15,6 +15,20 @@ beans {
     }
 }
 
+environments {
+    production {
+        dataSource {
+            driverClassName = "org.postgresql.Driver"
+            dialect = "org.hibernate.dialect.PostgreSQL9Dialect"
+
+            final uri = new URI(System.getenv("DATABASE_URL") ?: "postgres://pledbrook:password@localhost:5432/ggx_talks")
+            url = "jdbc:postgresql://" + uri.host + ":" + uri.port + uri.path
+            username = uri.userInfo.split(":")[0]
+            password = uri.userInfo.split(":")[1]
+        }
+    }
+}
+
 // Load configuration from JSON provided in the optional GRAILS_APP_CONFIG env variable.
 ConfigLoader.addEntries(loadJson(fetchJson()), this)
 def fetchJson() { return System.getenv("GRAILS_APP_CONFIG") }
