@@ -41,6 +41,7 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers('/assets/**').permitAll()
                 .antMatchers('/').hasAuthority('ROLE_USER')
                 .antMatchers('/dbconsole/**').permitAll()
+                .antMatchers('/login/auth**').permitAll()
                 .anyRequest().fullyAuthenticated()
             .and()
                 .formLogin().loginPage("/login/auth").permitAll()

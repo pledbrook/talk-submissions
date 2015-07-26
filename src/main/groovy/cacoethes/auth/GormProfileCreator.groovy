@@ -3,6 +3,7 @@ package cacoethes.auth
 import grails.transaction.Transactional
 import org.pac4j.core.profile.CommonProfile
 import org.pac4j.core.profile.ProfileCreator
+import org.pac4j.core.profile.converter.Converters
 import org.pac4j.http.credentials.UsernamePasswordCredentials
 import org.pac4j.http.profile.HttpProfile
 import org.slf4j.Logger
@@ -30,6 +31,9 @@ class GormProfileCreator implements ProfileCreator<UsernamePasswordCredentials, 
             log.debug "Found database profile for user '${user.username}'"
             profile.addAttributes(display_name: user.profile.name, email: user.profile.email)
         }
+
+        // Attach the auth profile to the user domain instance.
+        profile.addAttribute(PERSISTENCE_ID_KEY, user.id)
 
         for (r in user.authorities) {
             profile.addRole(r.authority)
