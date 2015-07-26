@@ -82,6 +82,15 @@ dependencies {
     runtime "org.postgresql:postgresql:9.2-1003-jdbc4"
 }
 
+task stage(dependsOn: ["clean", "war"]) << {
+    delete fileTree(dir: "build/distributions")
+    delete fileTree(dir: "build/assetCompile")
+    delete fileTree(dir: "build/distributions")
+    delete fileTree(dir: "build/libs", exclude: "*.war")
+}
+
+war.mustRunAfter clean
+
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
