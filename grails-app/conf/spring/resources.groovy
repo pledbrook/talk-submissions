@@ -12,22 +12,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 // Place your Spring DSL code here
 beans = {
+    def rootUrl = System.getenv("ROOT_URL") ?: "http://localhost:8080"
+
     webSecurityConfiguration(SecurityConfiguration)
     passwordEncoder(BCryptPasswordEncoder)
 
     // PAC4j configuration
     twitterClient(TwitterClient) {
-        key = application.config.app.twitterClient.key
-        secret = application.config.app.twitterClient.secret
+        key = application.config.app.twitterClient.key ?: System.getenv("APP_TWITTERCLIENT_KEY")
+        secret = application.config.app.twitterClient.secret ?: System.getenv("APP_TWITTERCLIENT_SECRET")
     }
 
     googleClient(Google2Client) {
-        key = application.config.app.googleClient.key
-        secret = application.config.app.googleClient.secret
+        key = application.config.app.googleClient.key ?: System.getenv("APP_GOOGLECLIENT_KEY")
+        secret = application.config.app.googleClient.secret ?: System.getenv("APP_GOOGLECLIENT_SECRET")
     }
 
     formClient(FormClient) {
-        loginUrl = "http://localhost:8080/login/auth"
+        loginUrl = "${rootUrl}/login/auth"
         authenticator = ref("usernamePasswordAuthenticator")
         profileCreator = ref("usernameProfileCreator")
     }
@@ -39,7 +41,7 @@ beans = {
     usernameProfileCreator(GormProfileCreator)
 
     pacClients(Clients) {
-        callbackUrl = "http://localhost:8080/callback"
+        callbackUrl = "${rootUrl}/callback"
         clients = [ref("twitterClient"), ref("googleClient"), ref("formClient")]
     }
 

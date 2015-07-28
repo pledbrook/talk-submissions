@@ -10,6 +10,9 @@ appender('STDOUT', ConsoleAppender) {
 }
 
 root(ERROR, ['STDOUT'])
+//logger("grails", DEBUG)
+//logger("cacoethes", DEBUG)
+//logger("org.springframework", DEBUG)
 
 if(Environment.current == Environment.DEVELOPMENT) {
     def targetDir = BuildSettings.TARGET_DIR
@@ -24,8 +27,8 @@ if(Environment.current == Environment.DEVELOPMENT) {
             }
         }
         logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false )
-//        logger("org.springframework", INFO)
-        logger("cacoethes", DEBUG)
-        logger("grails.app.services.cacoethes", DEBUG)
+//        logger("org.springframework", DEBUG)
+//        logger("cacoethes", DEBUG)
+//        logger("grails.app.services.cacoethes", DEBUG)
     }
 }

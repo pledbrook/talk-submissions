@@ -71,7 +71,7 @@ class CombinedUserDetailsService implements AuthenticationUserDetailsService<Cli
     private User fetchOrCreateDomainUser(OAuth20Profile profile) {
         def user = findOauthUser(profile)?.user
         if (!user) {
-            def username = userExists(profile) ? profile.username + randomDigits() : profile.username
+            def username = userExists(profile) ? username(profile) + randomDigits() : username(profile)
             user = userService.createUser(username).save(flush: true)
             new OauthId(user: user, accessToken: profileId(profile), provider: providerId(profile)).save()
             UserRole.create user, Role.findByAuthority("ROLE_USER"), true
@@ -88,6 +88,7 @@ class CombinedUserDetailsService implements AuthenticationUserDetailsService<Cli
 
     private String profileId(TwitterProfile profile) { return profile.id.toString() }
     private String providerId(TwitterProfile profile) { return TWITTER_PROVIDER_ID }
+    private String username(TwitterProfile profile) { return profile.username }
 
     @Transactional
     private OauthId findOauthUser(Google2Profile profile) {
@@ -96,9 +97,10 @@ class CombinedUserDetailsService implements AuthenticationUserDetailsService<Cli
 
     private String profileId(Google2Profile profile) { return profile.id.toString() }
     private String providerId(Google2Profile profile) { return GOOGLE_PROVIDER_ID }
+    private String username(Google2Profile profile) { return profile.email }
 
     private String getAccessToken(OAuth20Profile profile) { return profile.accessToken }
 
-    private boolean userExists(OAuth20Profile profile) { return User.countByUsername(profile.username) > 0 }
+    private boolean userExists(OAuth20Profile profile) { return User.countByUsername(username(profile)) > 0 }
     private String randomDigits() { return (new Random().nextInt(899) + 100).toString() }
 }
