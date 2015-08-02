@@ -19,13 +19,13 @@ beans = {
 
     // PAC4j configuration
     twitterClient(TwitterClient) {
-        key = application.config.app.twitterClient.key ?: System.getenv("APP_TWITTERCLIENT_KEY")
-        secret = application.config.app.twitterClient.secret ?: System.getenv("APP_TWITTERCLIENT_SECRET")
+        key = System.getenv("APP_TWITTERCLIENT_KEY")
+        secret = System.getenv("APP_TWITTERCLIENT_SECRET")
     }
 
     googleClient(Google2Client) {
-        key = application.config.app.googleClient.key ?: System.getenv("APP_GOOGLECLIENT_KEY")
-        secret = application.config.app.googleClient.secret ?: System.getenv("APP_GOOGLECLIENT_SECRET")
+        key = System.getenv("APP_GOOGLECLIENT_KEY")
+        secret = System.getenv("APP_GOOGLECLIENT_SECRET")
     }
 
     formClient(FormClient) {

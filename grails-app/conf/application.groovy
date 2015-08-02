@@ -1,3 +1,5 @@
+grails.config.locations = ["file:./local-config.groovy"]
+
 app {
     security {
         defaultTargetUrl = "/"
