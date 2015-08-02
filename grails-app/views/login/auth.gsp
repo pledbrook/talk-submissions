@@ -7,7 +7,8 @@
 <body>
   <div id='login'>
     <ul>
-      <li>To submit talks for the event, please log in.</li>
+      <li>To submit talks for the event, please log in via your Twitter or Google account. Note that you should always
+      log in with the same account each time as they will be treated as different users.</li>
     </ul>
     <div class='inner'>
       <g:if test='${flash.message}'>
