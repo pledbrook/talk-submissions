@@ -17,9 +17,9 @@ import org.springframework.security.web.WebAttributes
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 class LoginController {
-    String ajaxLoginUrl = "/ajax/auth"
-    String defaultTarget = "/"
-    String securityCheckUrl = "/j_spring_security_check"
+    String ajaxLoginUrl
+    String defaultTarget
+    String securityCheckUrl
 
     /**
      * Dependency injection for the authenticationTrustResolver.
@@ -46,7 +46,6 @@ class LoginController {
      * Show the login page.
      */
     def auth() {
-
         if (request.remoteUser != null) {
             redirect uri: defaultTarget
             return
