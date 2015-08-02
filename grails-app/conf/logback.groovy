@@ -27,7 +27,7 @@ if(Environment.current == Environment.DEVELOPMENT) {
             }
         }
         logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false )
-//        logger("org.springframework", DEBUG)
+//        logger("org.springframework.boot", DEBUG)
 //        logger("cacoethes", DEBUG)
 //        logger("grails.app.services.cacoethes", DEBUG)
     }
