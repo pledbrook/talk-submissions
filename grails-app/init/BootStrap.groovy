@@ -7,7 +7,6 @@ import grails.util.Environment
 class BootStrap {
 
     def userService
-    def dataSource
 
     def init = { servletContext ->
         def roleAdmin = Role.findOrSaveWhere(authority: "ROLE_ADMIN")
