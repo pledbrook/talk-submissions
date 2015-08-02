@@ -1,7 +1,5 @@
 <%@ page import="cacoethes.Profile" %>
 
-
-
 <div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'name', 'error')} required">
   <label for="name">
     <g:message code="profile.name.label" default="Name" />
@@ -27,6 +25,7 @@
   <g:textArea name="bio" cols="40" rows="5" maxlength="2000" value="${profileInstance?.bio}"/>
 </div>
 
+<app:hasRole name="ROLE_ADMIN">
 <div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'needTravel', 'error')} ">
   <label for="needTravel">
     <g:message code="profile.travel.label" default="Need travel expenses" />
@@ -42,6 +41,7 @@
   </label>
   <g:checkBox name="needAccommodation" value="${profileInstance?.needAccommodation}"/>
 </div>
+</app:hasRole>
 
 <div class="fieldinfo">Where you will be travelling from (city, state and/or country). Only necessary if you need travel expenses covered.</div>
 <div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'travelFrom', 'error')} ">
