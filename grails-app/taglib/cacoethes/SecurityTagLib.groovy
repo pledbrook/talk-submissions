@@ -7,11 +7,6 @@ class SecurityTagLib {
     static namespace = "app"
 
     def userService
-    def markdownService
-
-    def mdToHtml = { attrs, body ->
-        out << markdownService.mdToHtml((attrs.text ?: body())?.toString())
-    }
 
     /**
      * @attr name REQUIRED The name of the required role.

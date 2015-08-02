@@ -64,7 +64,7 @@ class ProfileController {
             return
         }
 
-        [profileInstance: new Profile(params)]
+        [profileInstance: new Profile(params), twitterId: userService.currentTwitterUsername()]
     }
 
     def save() {

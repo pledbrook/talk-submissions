@@ -23,73 +23,14 @@
       <g:if test="${flash.message}">
       <div class="message" role="status">${flash.message}</div>
       </g:if>
-      <ol class="property-list profile">
-      
-        <g:if test="${profileInstance?.name}">
-        <li class="fieldcontain">
-          <span id="name-label" class="property-label"><g:message code="profile.name.label" default="Name" /></span>
-          
-            <span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${profileInstance}" field="name"/></span>
-          
-        </li>
-        </g:if>
-      
-        <g:if test="${profileInstance?.email}">
-        <li class="fieldcontain">
-          <span id="email-label" class="property-label"><g:message code="profile.email.label" default="Email" /></span>
-          
-            <span class="property-value" aria-labelledby="email-label"><g:fieldValue bean="${profileInstance}" field="email"/></span>
-          
-        </li>
-        </g:if>
-      
-        <g:if test="${profileInstance?.bio}">
-        <li class="fieldcontain">
-          <span id="bio-label" class="property-label"><g:message code="profile.bio.label" default="Bio" /></span>
-          
-            <span class="property-value" aria-labelledby="bio-label"><app:mdToHtml><g:fieldValue bean="${profileInstance}" field="bio"/></app:mdToHtml></span>
-          
-        </li>
-        </g:if>
-
-        <li class="fieldcontain">
-          <span id="travel-label" class="property-label"><g:message code="profile.travel.label" default="Need travel expenses" /></span>
-          
-            <span class="property-value" aria-labelledby="bio-label"><g:fieldValue bean="${profileInstance}" field="needTravel"/></span>
-          
-        </li>
-
-        <li class="fieldcontain">
-          <span id="accommodation-label" class="property-label"><g:message code="profile.accommodation.label" default="Need accommodation expenses" /></span>
-          
-            <span class="property-value" aria-labelledby="bio-label"><g:fieldValue bean="${profileInstance}" field="needAccommodation"/></span>
-          
-        </li>
-
-        <li class="fieldcontain">
-          <span id="travelfrom-label" class="property-label"><g:message code="profile.travelfrom.label" default="Travelling from" /></span>
-          
-            <span class="property-value" aria-labelledby="travelfrom-label"><g:fieldValue bean="${profileInstance}" field="travelFrom"/></span>
-          
-        </li>
-      
-        <app:hasRole name="ROLE_ADMIN">
-        <g:if test="${profileInstance?.user}">
-        <li class="fieldcontain">
-          <span id="user-label" class="property-label"><g:message code="profile.user.label" default="User" /></span>
-          
-            <span class="property-value" aria-labelledby="user-label"><g:link controller="user" action="show" id="${profileInstance?.user?.id}">${profileInstance?.user?.encodeAsHTML()}</g:link></span>
-          
-        </li>
-        </g:if>
-        </app:hasRole>
-      
-      </ol>
-      <g:form>
+      <app:displayFields bean="${profileInstance}" excludes="["needTravel", "needAccommodation", "user"]"
+                         markdownProps="["bio", "notes"]" />
+      <g:form resource="${profileInstance}" method="DELETE">
         <fieldset class="buttons">
-          <g:hiddenField name="id" value="${profileInstance?.id}" />
-          <g:link class="edit" action="edit" id="${profileInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-          <g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+          <g:link class="edit" action="edit" resource="${profileInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+          <app:hasRole name="ROLE_ADMIN">
+          <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+          </app:hasRole>
         </fieldset>
       </g:form>
     </div>

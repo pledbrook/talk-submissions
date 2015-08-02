@@ -16,13 +16,27 @@
   <g:textField name="email" required="" value="${profileInstance?.email}"/>
 </div>
 
-<div class="fieldinfo">A short bio of yourself, up to 2000 characters. Markdown syntax supported.</div>
+<div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'twitterId', 'error')} required">
+  <label for="twitterId">
+    <g:message code="profile.twitterId.label" default="Twitter" />
+  </label>
+  <g:textField name="twitterId" value="${profileInstance?.twitterId ?: twitterId}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'organization', 'error')} required">
+  <label for="organization">
+    <g:message code="profile.organization.label" default="Organization" />
+  </label>
+  <g:textField name="organization" value="${profileInstance?.organization}"/>
+</div>
+
+<div class="fieldinfo">A short bio of yourself, up to 2000 characters. If previously presented at Skills Matter/Droidcon, please include link. Markdown syntax supported.</div>
 <div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'bio', 'error')} ">
   <label for="bio">
     <g:message code="profile.bio.label" default="Bio" />
-    
+    <span class="required-indicator">*</span>
   </label>
-  <g:textArea name="bio" cols="40" rows="5" maxlength="2000" value="${profileInstance?.bio}"/>
+  <g:textArea required="" name="bio" cols="40" rows="5" maxlength="2000" value="${profileInstance?.bio}"/>
 </div>
 
 <app:hasRole name="ROLE_ADMIN">
@@ -43,13 +57,21 @@
 </div>
 </app:hasRole>
 
-<div class="fieldinfo">Where you will be travelling from (city, state and/or country). Only necessary if you need travel expenses covered.</div>
+<div class="fieldinfo">(city, state and/or country)</div>
 <div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'travelFrom', 'error')} ">
   <label for="travelFrom">
-    <g:message code="profile.travelfrom.label" default="Travelling from" />
-    
+    <g:message code="profile.travelfrom.label" default="Location" />
+    <span class="required-indicator">*</span>
   </label>
-  <input type="text" name="travelFrom" value="${profileInstance?.travelFrom?.encodeAsHTML()}"/>
+  <input type="text" name="travelFrom" required="" value="${profileInstance?.travelFrom?.encodeAsHTML()}"/>
+</div>
+
+<div class="fieldinfo">Any additional notes such as names of co-speakers, special requirements, comments for the review committee, etc. Up to 2000 characters. Markdown syntax supported.</div>
+<div class="fieldcontain ${hasErrors(bean: profileInstance, field: 'notes', 'error')} ">
+  <label for="notes">
+    <g:message code="profile.notes.label" default="Additional notes" />
+  </label>
+  <g:textArea name="notes" cols="40" rows="5" maxlength="2000" value="${profileInstance?.notes}"/>
 </div>
 
 <app:hasRole name="ROLE_ADMIN">

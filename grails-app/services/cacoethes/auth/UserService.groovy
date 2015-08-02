@@ -2,6 +2,7 @@ package cacoethes.auth
 
 import grails.databinding.SimpleMapDataBindingSource
 import grails.transaction.Transactional
+import org.pac4j.oauth.profile.twitter.TwitterProfile
 import org.pac4j.springframework.security.authentication.ClientAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder as SCH
 
@@ -18,6 +19,30 @@ class UserService {
             return User.get(userId)
         }
         else return null
+    }
+
+    /**
+     * Returns the Twitter username for the current user. This will return
+     * {@code null} if the user is not logged in via Twitter.
+     */
+    String currentTwitterUsername() {
+        log.info "Fetching Twitter username for current user"
+        if (SCH.context.authentication instanceof ClientAuthenticationToken) {
+            def userProfile = SCH.context.authentication.userProfile
+            if (userProfile instanceof TwitterProfile) {
+                log.debug "Found Twitter username ${userProfile.username} for current user"
+                return userProfile.username
+
+            }
+            else {
+                log.debug "User is not logged in via Twitter"
+                return null
+            }
+        }
+        else {
+            log.debug "No user is logged in"
+            return null
+        }
     }
 
     User createUser(String username, String password = null) {

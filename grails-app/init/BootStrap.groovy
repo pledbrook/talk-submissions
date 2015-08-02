@@ -20,12 +20,14 @@ class BootStrap {
                     new Profile(
                         name: "Peter Ledbrook",
                         email: "p.ledbrook@cacoethes.co.uk",
-                        bio: "Some time Grails expert")).save(failOnError: true)
+                        bio: "Some time Grails expert",
+                        travelFrom: "London, UK")).save(failOnError: true)
             users << userService.createUser("dilbert", "password", enabled: true, profile:
                     new Profile(
                         name: "Dilbert the cartoon character",
                         email: "dilbert@nowhere.net",
-                        bio: "Dysfunctional IT employee")).save(failOnError: true)
+                        bio: "Dysfunctional IT employee",
+                        travelFrom: "Springfield, USA")).save(failOnError: true)
 
             for (u in users) {
                 UserRole.create u, roleUser
@@ -38,7 +40,8 @@ class BootStrap {
                     new Profile(
                         name: "Admin User",
                         email: "admin@nowhere.net",
-                        bio: "The super user")).save(failOnError: true)
+                        bio: "The super user",
+                        travelFrom: "N/A")).save(failOnError: true)
 
             UserRole.create admin, roleUser
             UserRole.create admin, roleAdmin
