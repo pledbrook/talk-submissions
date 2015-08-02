@@ -12,6 +12,7 @@ class BootStrap {
     def init = { servletContext ->
         def roleAdmin = Role.findOrSaveWhere(authority: "ROLE_ADMIN")
         def roleUser = Role.findOrSaveWhere(authority: "ROLE_USER")
+        def roleReviewer = Role.findOrSaveWhere(authority: "ROLE_REVIEWER")
 
         if (Environment.current == Environment.DEVELOPMENT && !User.findByUsername("pledbrook")) {
             def users = []
@@ -40,9 +41,8 @@ class BootStrap {
                         bio: "The super user")).save(failOnError: true)
 
             UserRole.create admin, roleUser
-            UserRole.create admin, roleAdmin, true
+            UserRole.create admin, roleAdmin
+            UserRole.create admin, roleReviewer, true
         }
-    }
-    def destroy = {
     }
 }
