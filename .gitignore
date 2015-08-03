@@ -1,4 +1,7 @@
 appConfig.groovy
+*.ipr
+*.iws
+*.iml
 *.sql
 .gradle/
 .idea/
