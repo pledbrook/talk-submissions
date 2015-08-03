@@ -43,8 +43,25 @@ body {
             box-shadow: 0 0 0.3em #255b17;
 }
 
-#grailsLogo {
-    background-color: #abbf78;
+#logo {
+    background-color: white;
+    display: inline-block;
+    font-size: 2em;
+    width: 95%;
+    margin: 10px;
+    text-align: center;
+}
+
+#logo img {
+    height: 50px;
+    margin-right: 20px;
+}
+
+#logo a {
+    display: inline-block;
+    line-height: normal;
+    text-decoration: none;
+    vertical-align: middle;
 }
 
 a:link, a:visited, a:hover {
@@ -71,11 +88,6 @@ img {
 }
 
 /* GENERAL */
-
-#grailsLogo a {
-    display: inline-block;
-    margin: 1em;
-}
 
 .content {
 }

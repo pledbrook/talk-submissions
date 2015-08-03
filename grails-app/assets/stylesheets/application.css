@@ -11,3 +11,57 @@
 *= require mobile
 *= require_self
 */
+
+/* The following get the Markdown properties to display with spacing between paragraphs */
+.property-value p {
+    margin-top: 0.5em;
+}
+
+.property-value p:first-child {
+    margin-top: 0;
+}
+
+/* The following get any <pre> blocks from Markdown rendering to display with decent spacing */
+.property-value pre {
+    margin-top: 0.5em;
+    margin-left: 2em;
+}
+
+.property-value pre:first-child {
+    margin-top: 0;
+}
+
+/* Make form text fields and areas wider so that they are less cramped */
+.fieldcontain input[type=text] {
+    width: 40%;
+}
+
+.fieldcontain textarea {
+    width: 50%;
+}
+
+/* Place the information blocks to the right of the form fields they describe */
+.fieldinfo {
+    float: right;
+    font-size: 0.9em;
+    font-style: italic;
+    margin-top: 3ex;
+    width: 20%;
+}
+
+/* Place checkbox groups in the normal form field locations, i.e. to the right of the label */
+.fieldcontain ul.checkboxGroup {
+    display: inline-block;
+    list-style-type: none;
+}
+
+/* Put the current user's name and the logout link top right of the page */
+#currentUser {
+    float: right;
+    margin: 0.8em 2em;
+}
+
+/** The paragraph of preamble at the start of each page needs some margins/padding */
+.content > p {
+    margin: 1.5em;
+}

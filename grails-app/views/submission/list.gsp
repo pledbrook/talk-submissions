@@ -17,8 +17,8 @@
       <ul>
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
         <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-        <li><g:link action="schedule">Schedule</g:link></li>
         <app:hasRole name="ROLE_ADMIN">
+          <li><g:link action="schedule">Schedule</g:link></li>
           <li><g:link controller="profile" action="acceptedExpenses" params="[forYear: 2012]">Expenses</g:link></li>
           <li><g:link controller="profile" action="acceptedEmails" params="[forYear: 2012]">Accepted Email Addresses</g:link></li>
         </app:hasRole>
@@ -26,14 +26,22 @@
     </div>
     <div id="list-submission" class="content scaffold-list" role="main">
       <h1>${pageTitle}</h1>
-      <p><em>Submission deadline:&nbsp;&nbsp; <strong><g:formatDate date="${deadline}" format="dd MMM yyyy"/></strong>&nbsp; 00:00 UTC&nbsp;&nbsp;&nbsp; (<g:countdown id="conf-countdown" date="${deadline}"/>)</em></p>
-      <app:loggedIn>
-      <p>If you need travel and/or accommodation expenses paid, please mark this in
-      </app:loggedIn>
-      <g:link controller="profile" action="show" id="${currentUser.profile?.id}">your profile</g:link>.</p>
       <g:if test="${flash.message}">
       <div class="message" role="status">${flash.message}</div>
       </g:if>
+      <p><em>Submission deadline:&nbsp;&nbsp; <strong><g:formatDate date="${deadline}" format="dd MMM yyyy"/></strong>&nbsp; 00:00 UTC&nbsp;&nbsp;&nbsp; (<g:countdown id="conf-countdown" date="${deadline}"/>)</em></p>
+      <app:loggedIn>
+      <p>We're putting on two days of expert lead talks by the champions of the Groovy & Grails world
+      such as core team members Graeme Rocher and Guillaume Laforge. The eXchange presents an unmissable
+      opportunity to engage with the leading experts and fellow enthusiasts as well as a unique opportunity
+      to learn the latest innovations and practices.</p>
+      <p>We're looking for all types of talks for this conference, including beginner ones, advanced techniques,
+      and real world usage.</p>
+      <p>All talks are planned to be 45 minutes (aim to talk for 35 to 40 minutes and 5 to 10 minutes for questions ).</p>
+      <p>Selection will be conducted by Skills Matter & the Programme Committee on the basis of making this
+      a varied and valuable event. All speakers will receive a ticket to the conference plus another one to
+      give away to a guest.
+      </app:loggedIn>
       <table>
         <thead>
           <tr>

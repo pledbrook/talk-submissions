@@ -12,7 +12,9 @@
       <ul>
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
         <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+        <app:hasRole name="ROLE_ADMIN">
         <li><g:link controller="submission" action="schedule">Schedule</g:link></li>
+        </app:hasRole>
       </ul>
     </div>
     <div id="edit-submission" class="content scaffold-edit" role="main">

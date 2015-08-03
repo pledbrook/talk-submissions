@@ -76,7 +76,6 @@ class ProfileController {
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'profile.label', default: 'Profile'), profileInstance.id])
         redirect uri: "/"
     }
 

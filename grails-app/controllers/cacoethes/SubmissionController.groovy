@@ -60,7 +60,6 @@ class SubmissionController {
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'submission.label', default: 'Submission'), submissionInstance.id])
         redirect action: "list"
     }
 
@@ -131,7 +130,6 @@ class SubmissionController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'submission.label', default: 'Submission'), submissionInstance.id])
         redirect(action: "show", id: submissionInstance.id)
     }
 
@@ -145,7 +143,6 @@ class SubmissionController {
 
         try {
             submissionInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'submission.label', default: 'Submission'), params.id])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {

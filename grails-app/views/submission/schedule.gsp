@@ -17,10 +17,10 @@ tr td {
     <div class="nav" role="navigation">
       <ul>
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <sec:ifAllGranted roles="ROLE_ADMIN">
+        <app:hasRole name="ROLE_ADMIN">
           <li><g:link controller="profile" action="acceptedExpenses" params="[forYear: 2012]">Expenses</g:link></li>
           <li><g:link controller="profile" action="acceptedEmails" params="[forYear: 2012]">Accepted Email Addresses</g:link></li>
-        </sec:ifAllGranted>
+        </app:hasRole>
       </ul>
     </div>
     <div id="schedule" class="content" role="main">
