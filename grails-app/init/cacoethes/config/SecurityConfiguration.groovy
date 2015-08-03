@@ -43,6 +43,7 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers('/dbconsole/**').permitAll()
                 .antMatchers('/login/auth**').permitAll()
                 .antMatchers('/health').permitAll()
+                .antMatchers('/shutdown').permitAll()
                 .anyRequest().fullyAuthenticated()
             .and()
                 .formLogin().loginPage("/login/auth").permitAll()
