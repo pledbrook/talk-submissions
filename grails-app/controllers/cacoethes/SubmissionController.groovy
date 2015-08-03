@@ -36,7 +36,7 @@ class SubmissionController {
             submissionCount = Submission.countByUserAndYear(currentUser, year)
         }
 
-        def deadline = new GregorianCalendar(2013, 8, 7)
+        def deadline = new GregorianCalendar(2015, 8, 11)
         deadline.timeZone = TimeZone.getTimeZone("UTC")
 
         [submissionInstanceList: submissions,
