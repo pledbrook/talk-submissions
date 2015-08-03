@@ -10,6 +10,8 @@
       <g:set var="pageTitle" value="Your Talk Submissions"/>
     </app:notHasRole>
     <title>${pageTitle}</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/1.6.1/jquery.countdown.min.js"
+            type="text/javascript"></script>
   </head>
   <body>
     <a href="#list-submission" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

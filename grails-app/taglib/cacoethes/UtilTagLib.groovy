@@ -7,15 +7,15 @@ class UtilTagLib {
         if (!attrs.date) throwTagError "Tag [countdown] requires the [date] attribute"
 
         if (new Date().before(attrs.date)) {
-            r.require modules: "countdown" 
+//            out << asset.javascript(src: "http://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/1.6.1/jquery.countdown.min.js")
             out << "<span id=\"${attrs.id}\"></span> to go"
-            r.script {
+            out << asset.script {
                 """(function() {
                     \$("#${attrs.id}").countdown({
                         until: new Date(${attrs.date.time}),
                         format: "dhM",
                         layout: "{dn} {dl} {hn} {hl} {mn} {ml}" });
-                })();"""
+                })();""".stripIndent()
             }
         }
         else {
