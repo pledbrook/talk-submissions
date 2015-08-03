@@ -46,7 +46,7 @@ class SubmissionController {
     }
 
     def create() {
-        [submissionInstance: new Submission(params)]
+        buildBaseFormModel(new Submission(params))
     }
 
     def save() {
@@ -55,8 +55,8 @@ class SubmissionController {
         submissionInstance.user = userService.currentUser()
         submissionInstance.year = new Date()[Calendar.YEAR]
 
-        if (!submissionInstance.save(flush: true)) {
-            render view: "create", model: [submissionInstance: submissionInstance]
+        if (!submissionInstance.validate() || !submissionInstance.save(flush: true)) {
+            render view: "create", model: buildBaseFormModel(submissionInstance)
             return
         }
 
@@ -84,10 +84,10 @@ class SubmissionController {
             return
         }
 
-        [submissionInstance: submissionInstance,
-         assignment: AssignmentCommand.fromSubmission(submissionInstance),
-         allTracks: Track.list(sort: "id"),
-         allSlots: TimeSlot.list(sort: "id")]
+        buildBaseFormModel(submissionInstance) + [
+                assignment: AssignmentCommand.fromSubmission(submissionInstance),
+                allTracks: Track.list(sort: "id"),
+                allSlots: TimeSlot.list(sort: "id")]
     }
 
     def update() {
@@ -117,13 +117,12 @@ class SubmissionController {
         if (params.accepted == "undecided") {
             submissionInstance.accepted = null
         }
-        else {
+        else if (params.accepted != null) {
             submissionInstance.accepted = Boolean.valueOf(params.accepted)
         }
 
-        if (!submissionInstance.save(flush: true)) {
-            render view: "edit", model: [
-                    submissionInstance: submissionInstance,
+        if (!submissionInstance.validate() || !submissionInstance.save(flush: true)) {
+            render view: "edit", model: buildBaseFormModel(submissionInstance) + [
                     assignment: AssignmentCommand.fromSubmission(submissionInstance),
                     allTracks: Track.list(sort: "id"),
                     allSlots: TimeSlot.list(sort: "id")]
@@ -226,6 +225,12 @@ class SubmissionController {
         // Check that the user has permission to view this one.
         return hasRole("ROLE_ADMIN") ||
                 submissionInstance.user == userService.currentUser()
+    }
+
+    private Map buildBaseFormModel(Submission submission) {
+        return [submissionInstance: submission,
+                audiences: Audience.list(sort: "orderIndex"),
+                categories: TalkCategory.list(sort: "durationInMinutes")]
     }
 
     private updateTalkAssignment(submission, trackId, slotId) {

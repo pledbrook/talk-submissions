@@ -1,4 +1,6 @@
+import cacoethes.Audience
 import cacoethes.Profile
+import cacoethes.TalkCategory
 import cacoethes.auth.Role
 import cacoethes.auth.User
 import cacoethes.auth.UserRole
@@ -9,6 +11,7 @@ class BootStrap {
     def userService
 
     def init = { servletContext ->
+        createReferenceData()
         def roleAdmin = Role.findOrSaveWhere(authority: "ROLE_ADMIN")
         def roleUser = Role.findOrSaveWhere(authority: "ROLE_USER")
         def roleReviewer = Role.findOrSaveWhere(authority: "ROLE_REVIEWER")
@@ -46,5 +49,18 @@ class BootStrap {
             UserRole.create admin, roleAdmin
             UserRole.create admin, roleReviewer, true
         }
+    }
+
+    private void createReferenceData() {
+        for (r in ["ROLE_ADMIN", "ROLE_USER", "ROLE_REVIEWER"]) {
+            new Role(authority: r).save()
+        }
+
+        new Audience(experience: "Beginner", orderIndex: 0).save()
+        new Audience(experience: "Intermediate", orderIndex: 1).save()
+        new Audience(experience: "Expert", orderIndex: 2).save()
+
+        new TalkCategory(name: "Presentation", durationInMinutes: 45).save()
+        new TalkCategory(name: "Workshop", durationInMinutes: 180).save()
     }
 }

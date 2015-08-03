@@ -43,20 +43,21 @@
           
         </li>
         </g:if>
-      
-        <app:hasRole name="ROLE_ADMIN">
-        <g:if test="${submissionInstance?.user}">
+
         <li class="fieldcontain">
-          <span id="user-label" class="property-label"><g:message code="submission.user.label" default="User" /></span>
-          
-          <g:set var="currProfile" value="${submissionInstance?.user?.profile}"/>
-          <span class="property-value" aria-labelledby="user-label">
-            <g:link controller="profile" action="show" id="${currProfile?.id}">${currProfile?.name}</g:link>
-          </span>
-          
+          <span id="audiences-label" class="property-label"><g:message code="submission.audiences.label" default="Audience" /></span>
+
+          <span class="property-value" aria-labelledby="audiences-label">${submissionInstance.audiences.sort { it.orderIndex }*.experience.join(", ")}</span>
+
         </li>
-        </g:if>
-        </app:hasRole>
+
+        <li class="fieldcontain">
+          <span id="category-label" class="property-label"><g:message code="submission.category.label" default="Category" /></span>
+
+          <span class="property-value" aria-labelledby="category-label">${submissionInstance.category.name}</span>
+
+        </li>
+
       
         <li class="fieldcontain">
           <span id="accepted-label" class="property-label"><g:message code="submission.accepted.label" default="Accepted" /></span>
@@ -85,6 +86,20 @@
           </span>
           
         </li>
+
+        <app:hasRole name="ROLE_ADMIN">
+        <g:if test="${submissionInstance?.user}">
+        <li class="fieldcontain">
+          <span id="user-label" class="property-label"><g:message code="submission.user.label" default="User" /></span>
+
+          <g:set var="currProfile" value="${submissionInstance?.user?.profile}"/>
+          <span class="property-value" aria-labelledby="user-label">
+            <g:link controller="profile" action="show" id="${currProfile?.id}">${currProfile?.name}</g:link>
+          </span>
+
+        </li>
+        </g:if>
+        </app:hasRole>
       
       </ol>
       <g:form>
