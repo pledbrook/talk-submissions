@@ -52,6 +52,8 @@ class BootStrap {
     }
 
     private void createReferenceData() {
+        if (Role.count() > 0) return
+
         for (r in ["ROLE_ADMIN", "ROLE_USER", "ROLE_REVIEWER"]) {
             new Role(authority: r).save()
         }
@@ -61,6 +63,6 @@ class BootStrap {
         new Audience(experience: "Expert", orderIndex: 2).save()
 
         new TalkCategory(name: "Presentation", durationInMinutes: 45).save()
-        new TalkCategory(name: "Workshop", durationInMinutes: 180).save()
+        new TalkCategory(name: "Workshop", durationInMinutes: 180).save(flush: true)
     }
 }

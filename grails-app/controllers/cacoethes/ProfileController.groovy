@@ -71,7 +71,7 @@ class ProfileController {
         final profileInstance = new Profile(params)
         final currentUser = userService.currentUser()
         if (currentUser.username != "admin") profileInstance.user = currentUser
-        if (!profileInstance.save(flush: true)) {
+        if (!profileInstance.validate() || !profileInstance.save(flush: true)) {
             render(view: "create", model: [profileInstance: profileInstance])
             return
         }
@@ -122,7 +122,7 @@ class ProfileController {
 
         profileInstance.properties = params
 
-        if (!profileInstance.save(flush: true)) {
+        if (!profileInstance.validate() || !profileInstance.save(flush: true)) {
             render(view: "edit", model: [profileInstance: profileInstance])
             return
         }
